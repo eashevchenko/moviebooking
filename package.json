@@ -1,0 +1,27 @@
+{
+  "name": "moviebooking",
+  "version": "0.1.0",
+  "description": "Movie booking service",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "test": "test"
+  },
+  "keywords": [
+    "movie"
+  ],
+  "author": "Eugene Shevchenko",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "body-parser": "^1.17.1",
+    "express": "^4.15.0",
+    "joi": "^10.6.0",
+    "mongoose": "^4.8.6",
+    "morgan": "^1.8.2",
+    "passport": "^0.3.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
+}
