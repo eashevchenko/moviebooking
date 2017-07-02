@@ -4,7 +4,7 @@ const express = require('express');
 const app = express();
 const PORT = 3001;
 
-require('./db');
+require('./config/db');
 require('./middlewares')(app);
 require('./routes')(app);
 
