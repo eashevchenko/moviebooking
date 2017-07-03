@@ -2,14 +2,14 @@ const express = require('express');
 const router = express.Router();
 
 const HallsController = require('../controllers/hall');
-const {validate, schema} = require('../helpers/routeHelper');
+const {validate, validateBody, schema} = require('../helpers/routeHelper');
 
 router.route('/')
     .get(HallsController.getHalls);
 
 router.route('/:id')
     .get(validate(schema.idSchema, 'id'), HallsController.getHallById)
-    .post(HallsController.createHallByCinema);
+    .post(validate(schema.idSchema, 'id'), validateBody(schema.hallSchema), HallsController.createHallByCinema);
 
 router.route('/:id/cinema')
     .get(validate(schema.idSchema, 'id'), HallsController.getHallCinema);

@@ -15,9 +15,28 @@ module.exports = {
         }
     },
 
+    validateBody: (schema) => {
+        return (req, res, next) => {
+            const result = Joi.validate(req.body, schema);
+
+            if (result.error) {
+                return res.status(400).json(result.error);
+            } else {
+                next();
+            }
+        }
+    },
+
     schema: {
         idSchema: Joi.object().keys({
             id: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required()
-        })
+        }),
+        movieSchema: Joi.object().keys({
+            title: Joi.string().required()
+        }),
+        hallSchema: Joi.object().keys({
+            title: Joi.string().required(),
+            places: Joi.number().integer().min(1).required()
+        }),
     }
 };

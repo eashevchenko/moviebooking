@@ -4,13 +4,10 @@ const Schema = mongoose.Schema;
 
 const hallSchema = new Schema({
     title: {
-        type: String,
-        required: true
+        type: String
     },
     places: {
-        type: Number,
-        required: true,
-        min: [1, 'Count of places must be non zero']
+        type: Number
     },
     cinema: {
         type: Schema.Types.ObjectId,
