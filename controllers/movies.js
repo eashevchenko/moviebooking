@@ -17,7 +17,6 @@ module.exports = {
         try {
             const {id} = req.params;
             const movie = await Movie.findById(id);
-            console.log(movie);
             res.status(200).json(movie);
         } catch (err) {
             next(err);

@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
-//mongoose.Promise = require('bluebird');
-mongoose.Promise = global.Promise;
+mongoose.Promise = require('bluebird');
+//mongoose.Promise = global.Promise;
 
-const dbUri = 'mongodb://localhost/mbooking';
+const dbUri = 'mongodb://localhost:27017/mbooking';
 const connection = mongoose.connection;
 
 const mongooseOptions = {
@@ -15,4 +15,4 @@ mongoose.connect(dbUri, mongooseOptions);
 
 connection.on('connected', () => console.log(`Mongoose connected to ${dbUri}`));
 connection.on('error', (err) => console.error('MongoDB error: %s', err));
-connection.on('disconnected', () => console.log(`Mongoose disconnected from ${dbUrl}`));
+connection.on('disconnected', () => console.log(`Mongoose disconnected from ${dbUri}`));

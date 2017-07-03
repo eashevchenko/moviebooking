@@ -5,6 +5,10 @@ const userSchema = new Schema({
     firstName: String,
     lastName: String,
     phoneNumber: String,
+    tickets: [{
+        type: Schema.Types.ObjectId,
+        ref: 'ticket'
+    }],
     creditCard: {
         number: Number,
         cvc: Number,

@@ -2,15 +2,17 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const showTimeSchema = new Schema({
-    date: new Date(),
-    createdon: {
-        type: Date, default: Date.now
+    start: {
+        type: Date
     },
-    movies: [{
+    end: {
+        type: Date
+    },
+    movie: {
         type: Schema.Types.ObjectId,
         ref: 'movie'
-    }]
+    }
 });
 
-const ShowTime = mongoose.model('Showtime', showTimeSchema);
+const ShowTime = mongoose.model('showtime', showTimeSchema);
 module.exports = ShowTime;

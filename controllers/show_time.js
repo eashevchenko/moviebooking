@@ -27,19 +27,13 @@ module.exports = {
         try {
             const {id} = req.params;
             const showTime = new ShowTime(req.body);
-
-            console.log(id);
             const movie = await Movie.findById(id);
-
-            console.log(movie);
 
             showTime.movie = movie;
 
             await showTime.save();
 
             movie.showTimes.push(showTime);
-
-            console.log(movie);
 
             await movie.save();
 
