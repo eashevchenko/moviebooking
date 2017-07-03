@@ -1,6 +1,5 @@
 const Movie = require('../model/movie');
-
-const MessageHelper = require('../helpers/messages');
+const {initMessageObj, messages} = require('../helpers/messageHelper');
 
 module.exports = {
 
@@ -14,13 +13,30 @@ module.exports = {
     },
 
     getMovieById: async (req, res, next) => {
-        try {
             const {id} = req.params;
             const movie = await Movie.findById(id);
             res.status(200).json(movie);
-        } catch (err) {
-            next(err);
-        }
+    },
+
+    getMovieShowTimes: async (req, res, next) => {
+      try {
+          const {id} = req.params;
+
+          const options = {
+            path: 'showTimes',
+            select: {'start': 1, 'schedule': 1}
+          };
+
+          const movieShowTimes = await Movie.findById(id).populate(options);
+
+          if(!movieShowTimes) {
+              return res.status(404).json(initMessageObj(messages.movieNotFoundMessage));
+          }
+
+          res.status(200).json(movieShowTimes.showTimes);
+      } catch (err) {
+          next(err);
+      }
     },
 
     createMovie: async (req, res, next) => {
@@ -47,7 +63,7 @@ module.exports = {
         try {
             const {id} = req.params;
             const movie = await Movie.findByIdAndRemove(id);
-            res.status(205).json(MessageHelper.initMessageObj(MessageHelper.messages.removedMovieMessage));
+            res.status(205).json(initMessageObj(messages.movieNotFoundMessage));
         } catch (err) {
             next(err);
         }

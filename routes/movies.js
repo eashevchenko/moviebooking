@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const {validate, schema} = require('../helpers/routeHelper');
 
 const MoviesController = require('../controllers/movies');
 
@@ -8,8 +9,11 @@ router.route('/')
     .post(MoviesController.createMovie);
 
 router.route('/:id')
-    .get(MoviesController.getMovieById)
+    .get(validate(schema.idSchema, 'id'), MoviesController.getMovieById)
     .put(MoviesController.updateMovie)
     .delete(MoviesController.removeMovie);
+
+router.route('/:id/showtimes')
+      .get(validate(schema.idSchema, 'id'), MoviesController.getMovieShowTimes);
 
 module.exports = router;

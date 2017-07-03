@@ -1,18 +1,27 @@
 const mongoose = require('mongoose');
+const moment = require('moment');
 const Schema = mongoose.Schema;
 
+const defaultDuration = moment.duration(90, 'minutes').valueOf();
+
 const movieSchema = new Schema({
-    title: String,
+    title: {
+        type: String,
+        required: true
+    },
     description: String,
     director: String,
-    timeDuration: Number,
+    timeDuration: {
+        type: Number,
+        default: defaultDuration
+    },
     showTimes: [{
         type: Schema.Types.ObjectId,
         ref: 'showtime'
     }],
     actors: [{
-       type: Schema.Types.ObjectId,
-        ref: 'actor'
+       firstName: String,
+       lastName: String
     }],
     halls: [{
        type: Schema.Types.ObjectId,
