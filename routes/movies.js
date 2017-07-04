@@ -8,6 +8,10 @@ router.route('/')
     .get(MoviesController.getMovies)
     .post([validateBody(schema.movieSchema)], MoviesController.createMovie);
 
+router.route('/list')
+    .get(MoviesController.getMoviesByPagination);
+
+
 router.route('/:id')
     .get([validate(schema.idSchema, 'id')], MoviesController.getMovieById)
     .put(MoviesController.updateMovie)

@@ -1,5 +1,6 @@
 const Movie = require('../model/movie');
 const {initMessageObj, messages} = require('../helpers/messageHelper');
+const {getDefaultValues} = require('../helpers/appHelper');
 
 module.exports = {
 
@@ -7,6 +8,25 @@ module.exports = {
         try {
             const movies = await Movie.find({});
             res.status(200).json(movies);
+        } catch (err) {
+            next(err);
+        }
+    },
+
+    getMoviesByPagination: async (req, res, next) => {
+        try {
+
+            const pageStr = req.param('page');
+            const limitStr = req.param('limit');
+            const sortStr = req.param('sort');
+
+            const page = parseInt(pageStr) ||  getDefaultValues.defaultPage;
+            const limit = parseInt(limitStr) || getDefaultValues.defaultLimit;
+            const sort = sortStr || getDefaultValues.defaultSort;
+
+            const skip = (page * limit) - limit;
+            const paginatedHalls = await Movie.find({}).skip(skip).limit(limit).sort({ title: sort });
+            res.status(200).json(paginatedHalls);
         } catch (err) {
             next(err);
         }

@@ -8,6 +8,9 @@ router.route('/')
       .get(CinemasController.getCinemas)
       .post([validateBody(schema.cinemaSchema)], CinemasController.createCinema);
 
+router.route('/list')
+      .get(CinemasController.getCinemasByPagination);
+
 router.route('/:id')
       .get([validate(schema.idSchema, 'id')], CinemasController.getCinemaById)
       .delete([validate(schema.idSchema, 'id')], CinemasController.removeCinema);

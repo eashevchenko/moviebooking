@@ -7,6 +7,9 @@ const {validate, validateBody, schema} = require('../helpers/routeHelper');
 router.route('/')
     .get(HallsController.getHalls);
 
+router.route('/list')
+    .get(HallsController.getHallsByPagination);
+
 router.route('/:id')
     .get([validate(schema.idSchema, 'id')], HallsController.getHallById)
     .post([validate(schema.idSchema, 'id'),

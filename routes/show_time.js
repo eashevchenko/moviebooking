@@ -8,6 +8,10 @@ const {validate, schema} = require('../helpers/routeHelper');
 router.route('/')
       .get(ShowTimeController.getShowTimes);
 
+router.route('/list')
+    .get(ShowTimeController.getShowTimesByPagination);
+
+
 router.route('/:id')
       .get([validate(schema.idSchema, 'id')], ShowTimeController.getShowTime)
       .post([validate(schema.idSchema, 'id')], ShowTimeController.createShowTime);

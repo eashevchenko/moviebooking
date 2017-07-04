@@ -2,6 +2,7 @@ const ShowTime = require('../model/showtime');
 const Movie = require('../model/movie');
 const Hall = require('../model/hall');
 const {initMessageObj, messages} = require('../helpers/messageHelper');
+const {getDefaultValues} = require('../helpers/appHelper');
 
 module.exports = {
 
@@ -9,6 +10,25 @@ module.exports = {
         try {
             const showTimes = await ShowTime.find({});
             res.status(200).json(showTimes);
+        } catch (err) {
+            next(err);
+        }
+    },
+
+    getShowTimesByPagination: async (req, res, next) => {
+        try {
+
+            const pageStr = req.param('page');
+            const limitStr = req.param('limit');
+            const sortStr = req.param('sort');
+
+            const page = parseInt(pageStr) ||  getDefaultValues.defaultPage;
+            const limit = parseInt(limitStr) || getDefaultValues.defaultLimit;
+            const sort = sortStr || getDefaultValues.defaultSort;
+
+            const skip = (page * limit) - limit;
+            const paginatedCinemas = await ShowTime.find({}).skip(skip).limit(limit).sort({ title: sort });
+            res.status(200).json(paginatedCinemas);
         } catch (err) {
             next(err);
         }

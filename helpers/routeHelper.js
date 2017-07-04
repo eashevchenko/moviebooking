@@ -31,6 +31,10 @@ module.exports = {
         idSchema: Joi.object().keys({
             id: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required()
         }),
+        paginateSchema: Joi.object().keys({
+            page: Joi.number().required(),
+            size: Joi.number().required()
+        }),
         queryDateSchema: Joi.object().keys({
             from: Joi.date().required(),
             to: Joi.date()

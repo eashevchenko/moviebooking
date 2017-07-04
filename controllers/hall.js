@@ -1,14 +1,33 @@
 const Hall = require('../model/hall');
 const Cinema = require('../model/cinema');
-
+const {getDefaultValues} = require('../helpers/appHelper');
 const {initMessageObj, messages} = require('../helpers/messageHelper');
 
 module.exports = {
 
     getHalls: async (req, res, next) => {
         try {
-            const halls = await Hall.find({});
+            const halls = await Hall.find({}).sort({ title: 'desc' });
             res.status(200).json(halls);
+        } catch (err) {
+            next(err);
+        }
+    },
+
+    getHallsByPagination: async (req, res, next) => {
+        try {
+
+            const pageStr = req.param('page');
+            const limitStr = req.param('limit');
+            const sortStr = req.param('sort');
+
+            const page = parseInt(pageStr) ||  getDefaultValues.defaultPage;
+            const limit = parseInt(limitStr) || getDefaultValues.defaultLimit;
+            const sort = sortStr || getDefaultValues.defaultSort;
+
+            const skip = (page * limit) - limit;
+            const paginatedHalls = await Hall.find({}).skip(skip).limit(limit).sort({ title: sort });
+            res.status(200).json(paginatedHalls);
         } catch (err) {
             next(err);
         }

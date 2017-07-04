@@ -1,4 +1,5 @@
 const User = require('../model/user');
+const {getDefaultValues} = require('../helpers/appHelper');
 
 module.exports = {
 
@@ -6,6 +7,25 @@ module.exports = {
         try {
             const users = await User.find({});
             res.status(200).json(users);
+        } catch (err) {
+            next(err);
+        }
+    },
+
+    getUsersByPagination: async (req, res, next) => {
+        try {
+
+            const pageStr = req.param('page');
+            const limitStr = req.param('limit');
+            const sortStr = req.param('sort');
+
+            const page = parseInt(pageStr) ||  getDefaultValues.defaultPage;
+            const limit = parseInt(limitStr) || getDefaultValues.defaultLimit;
+            const sort = sortStr || getDefaultValues.defaultSort;
+
+            const skip = (page * limit) - limit;
+            const paginatedCinemas = await User.find({}).skip(skip).limit(limit).sort({ title: sort });
+            res.status(200).json(paginatedCinemas);
         } catch (err) {
             next(err);
         }

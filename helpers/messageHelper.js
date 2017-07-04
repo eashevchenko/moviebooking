@@ -12,6 +12,7 @@ module.exports = {
         cinemaNotFoundMessage: 'cinema not found !',
         movieNotFoundMessage: 'movie not found !',
         moviesNotFoundMessage: 'movies not found !',
-        hallNotFoundMessage: 'hall not found !'
+        hallNotFoundMessage: 'hall not found !',
+        parametersRequired: 'request parameters are required !'
     },
 };
