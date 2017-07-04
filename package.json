@@ -17,7 +17,7 @@
     "express": "^4.15.0",
     "joi": "^10.6.0",
     "moment": "^2.18.1",
-    "mongoose": "^4.11.1",
+    "mongoose": "^4.10.8",
     "morgan": "^1.8.2"
   },
   "devDependencies": {
