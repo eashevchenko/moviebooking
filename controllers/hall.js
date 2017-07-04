@@ -17,16 +17,14 @@ module.exports = {
     getHallsByPagination: async (req, res, next) => {
         try {
 
-            const pageStr = req.param('page');
-            const limitStr = req.param('limit');
-            const sortStr = req.param('sort');
+            const {page, limit, sort} = req.query;
 
-            const page = parseInt(pageStr) ||  getDefaultValues.defaultPage;
-            const limit = parseInt(limitStr) || getDefaultValues.defaultLimit;
-            const sort = sortStr || getDefaultValues.defaultSort;
+            const pageRes = parseInt(page) ||  getDefaultValues.defaultPage;
+            const limitRes = parseInt(limit) || getDefaultValues.defaultLimit;
+            const sortRes = sort || getDefaultValues.defaultSort;
 
-            const skip = (page * limit) - limit;
-            const paginatedHalls = await Hall.find({}).skip(skip).limit(limit).sort({ title: sort });
+            const skipRes = (pageRes * limitRes) - limitRes;
+            const paginatedHalls = await Hall.find({}).skip(skipRes).limit(limitRes).sort({ title: sortRes });
             res.status(200).json(paginatedHalls);
         } catch (err) {
             next(err);

@@ -16,17 +16,14 @@ module.exports = {
 
     getCinemasByPagination: async (req, res, next) => {
       try {
+          const {page, limit, sort} = req.query;
 
-          const pageStr = req.param('page');
-          const limitStr = req.param('limit');
-          const sortStr = req.param('sort');
+          const pageRes = parseInt(page) ||  getDefaultValues.defaultPage;
+          const limitRes = parseInt(limit) || getDefaultValues.defaultLimit;
+          const sortRes = sort || getDefaultValues.defaultSort;
 
-          const page = parseInt(pageStr) ||  getDefaultValues.defaultPage;
-          const limit = parseInt(limitStr) || getDefaultValues.defaultLimit;
-          const sort = sortStr || getDefaultValues.defaultSort;
-
-          const skip = (page * limit) - limit;
-          const paginatedCinemas = await Cinema.find({}).skip(skip).limit(limit).sort({ title: sort });
+          const skipRes = (pageRes * limitRes) - limitRes;
+          const paginatedCinemas = await Cinema.find({}).skip(skipRes).limit(limitRes).sort({ title: sortRes });
           res.status(200).json(paginatedCinemas);
       } catch (err) {
           next(err);
