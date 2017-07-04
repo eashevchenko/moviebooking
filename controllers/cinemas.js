@@ -94,6 +94,15 @@ module.exports = {
                 return res.status(404).json(initMessageObj(messages.moviesNotFoundMessage));
             }
 
+            // TODO resolve empty array of showTimes
+            // if showTimes result are empty - return not found message
+            const cinemaObj = cinemaMovies.toObject();
+            const showTimesArr = cinemaObj.halls[0].showTimes;
+
+            if(showTimesArr && showTimesArr.length === 0) {
+                return res.status(404).json(initMessageObj(messages.moviesNotFoundMessage));
+            }
+
             res.status(200).json(cinemaMovies.halls);
         } catch (err) {
             next(err);
