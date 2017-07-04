@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
-mongoose.Promise = require('bluebird');
-//mongoose.Promise = global.Promise;
+mongoose.Promise = global.Promise;
 
 const dbUri = 'mongodb://localhost:27017/mbooking';
 const connection = mongoose.connection;

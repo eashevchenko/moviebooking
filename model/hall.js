@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const Joi = require('joi');
 const Schema = mongoose.Schema;
 
 const hallSchema = new Schema({
@@ -13,9 +12,9 @@ const hallSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'cinema'
     },
-    movies: [{
+    showTimes: [{
         type: Schema.Types.ObjectId,
-        ref: 'movie'
+        ref: 'showtime'
     }],
     tickets: [{
         type: Schema.Types.ObjectId,

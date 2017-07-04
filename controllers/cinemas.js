@@ -55,7 +55,7 @@ module.exports = {
                 return res.status(404).json(initMessageObj(messages.hallNotFoundMessage));
             }
 
-            res.status(200).json(cinemaHalls.halls.movies);
+            res.status(200).json(cinemaHalls.halls);
 
         } catch (err) {
             next(err);
@@ -77,7 +77,6 @@ module.exports = {
 
             const cinemaMovies = await Cinema.findById(id).populate(options);
 
-            console.log(cinemaMovies)
             if(!cinemaMovies) {
                 return res.status(404).json(initMessageObj(messages.moviesNotFoundMessage));
             }

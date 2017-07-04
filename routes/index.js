@@ -9,6 +9,6 @@ module.exports = (app) => {
     app.use('/cinemas', cinemas);
     app.use('/halls', halls);
     app.use('/movies', movies);
-    app.use('/showtime', showTimes);
+    app.use('/showtimes', showTimes);
 };
 

@@ -13,14 +13,12 @@
   "author": "Eugene Shevchenko",
   "license": "MIT",
   "dependencies": {
-    "bluebird": "^3.5.0",
     "body-parser": "^1.17.1",
     "express": "^4.15.0",
     "joi": "^10.6.0",
     "moment": "^2.18.1",
-    "mongoose": "4.8.6",
-    "morgan": "^1.8.2",
-    "passport": "^0.3.2"
+    "mongoose": "^4.11.1",
+    "morgan": "^1.8.2"
   },
   "devDependencies": {
     "nodemon": "^1.11.0"

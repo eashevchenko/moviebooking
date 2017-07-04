@@ -7,20 +7,15 @@ const showTimeSchema = new Schema({
         type: Date,
         default: moment().valueOf()
     },
-    end: {
-        type: Date
+    hall: {
+        type: Schema.Types.ObjectId,
+        ref: 'hall'
     },
     movie: {
         type: Schema.Types.ObjectId,
         ref: 'movie'
     }
 });
-
-function scheduleMovie(start, duration) {
-    if(start && duration) {
-       return moment(start).add()
-    }
-}
 
 const ShowTime = mongoose.model('showtime', showTimeSchema);
 module.exports = ShowTime;
