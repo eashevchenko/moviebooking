@@ -46,20 +46,6 @@ module.exports = {
         }
     },
 
-    getHallByTitle: async (req, res, next) => {
-        try {
-            const {title} = req.body;
-            const hall = await Hall.find({
-               title: title
-            });
-
-            hall ? res.status(200).json(hall)
-                 : res.status(404).json(initMessageObj(messages.hallNotFoundMessage));
-        } catch (err) {
-            next(err);
-        }
-    },
-
     getHallCinema: async (req, res, next) => {
         try {
             const {id} = req.params;
