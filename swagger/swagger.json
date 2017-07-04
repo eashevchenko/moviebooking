@@ -1,0 +1,98 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is API of movie booking service",
+    "version": "0.1.0",
+    "title": "Movie booking API",
+    "license": {
+      "name": "MIT"
+    }
+  },
+  "tags": [
+    {
+      "name": "cinemas",
+      "description": "Access to Petstore orders"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/cinemas": {
+      "get": {
+        "tags": [
+          "cinema"
+        ],
+        "summary": "Get all cinemas",
+        "description": "",
+        "operationId": "getCinemas",
+        "consumes": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "cinema"
+        ],
+        "summary": "Create new cinema",
+        "description": "",
+        "operationId": "createCinema",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Cinema object that needs to be added to the store",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Cinema"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "405": {
+            "description": "Validation exception"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Cinema": {
+      "type": "object",
+      "required": [
+        "title"
+      ],
+      "properties": {
+        "title": {
+          "type": "string",
+          "example": "New cinema"
+        },
+        "address": {
+          "type": "string",
+          "example": "Simple address"
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  }
+}
