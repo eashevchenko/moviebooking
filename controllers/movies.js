@@ -81,7 +81,13 @@ module.exports = {
         try {
             const {id} = req.params;
             const movie = await Movie.findByIdAndRemove(id);
-            res.status(205).json(initMessageObj(messages.movieNotFoundMessage));
+
+            if(!movie) {
+                res.status(404).json(initMessageObj(messages.movieNotFoundMessage));
+            }
+
+            res.status(205).json(initMessageObj(messages.removedMovieMessage));
+
         } catch (err) {
             next(err);
         }

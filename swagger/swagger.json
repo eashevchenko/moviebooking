@@ -456,6 +456,250 @@
           }
         }
       }
+    },
+    "/movies": {
+      "get": {
+        "tags": [
+          "movie"
+        ],
+        "summary": "Get movies",
+        "description": "",
+        "operationId": "getMovies",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "movie"
+        ],
+        "summary": "Create new movie",
+        "description": "",
+        "operationId": "createMovie",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Movie object that needs to be added to the store",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Movie"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "405": {
+            "description": "Validation exception"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      }
+    },
+    "/movies/list": {
+      "get": {
+        "tags": [
+          "movie"
+        ],
+        "summary": "Finds Movies by pagination",
+        "description": "",
+        "operationId": "getMoviesByPagination",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page number",
+            "required": false,
+            "type": "string",
+            "default": "1"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "limit of movies",
+            "required": false,
+            "type": "string",
+            "default": "3"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "order list of movies",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ],
+              "default": "asc"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Movie"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/movies/{id}": {
+      "get": {
+        "tags": [
+          "movie"
+        ],
+        "summary": "Find movie by ID",
+        "description": "Returns a single movie",
+        "operationId": "getMovieById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of movie to return",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Movie"
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Movie not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "movie"
+        ],
+        "summary": "Update movie by id",
+        "description": "",
+        "operationId": "updateMovie",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Movie object that needs to be updated",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Movie"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "movie"
+        ],
+        "summary": "Deletes a movie",
+        "description": "",
+        "operationId": "removeMovie",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Movie id to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Movie not found"
+          }
+        }
+      }
+    },
+    "/movies/{id}/showtimes": {
+      "get": {
+        "tags": [
+          "movie"
+        ],
+        "summary": "Find showtimes by movie ID",
+        "description": "Returns array of showTimes",
+        "operationId": "getMovieShowTimes",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of movie to return",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Movie"
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Movie not found"
+          }
+        }
+      }
     }
   },
   "securityDefinitions": {
@@ -496,6 +740,30 @@
         "places": {
           "type": "number",
           "example": 40
+        }
+      }
+    },
+    "Movie": {
+      "type": "object",
+      "required": [
+        "title"
+      ],
+      "properties": {
+        "title": {
+          "type": "string",
+          "example": "Jurassic Park"
+        },
+        "description": {
+          "type": "string",
+          "example": "fantastic film"
+        },
+        "director": {
+          "type": "string",
+          "example": "Steven Spielberg"
+        },
+        "timeDuration": {
+          "type": "number",
+          "example": "15000"
         }
       }
     }

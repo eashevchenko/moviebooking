@@ -124,7 +124,11 @@ module.exports = {
         try {
             const {id} = req.params;
             await Cinema.findByIdAndRemove(id);
-            res.status(205).json(initMessageObj(messages.cinemaNotFoundMessage));
+
+            if(!cinema) {
+                res.status(404).json(initMessageObj(messages.cinemaNotFoundMessage));
+            }
+            res.status(205).json(initMessageObj(messages.removedCinemaMessage));
         } catch (err) {
             next(err);
         }

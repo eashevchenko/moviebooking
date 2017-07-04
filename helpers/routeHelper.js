@@ -43,7 +43,10 @@ module.exports = {
             timestamp: Joi.date().timestamp().required()
         }),
         movieSchema: Joi.object().keys({
-            title: Joi.string().required()
+            title: Joi.string().required(),
+            description: Joi.string().required(),
+            director: Joi.string().required(),
+            timeDuration: Joi.number().integer().min(1)
         }),
         cinemaSchema: Joi.object().keys({
             title: Joi.string().required(),
