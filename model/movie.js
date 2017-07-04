@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const moment = require('moment');
 const Schema = mongoose.Schema;
 
-const defaultDuration = moment.duration(90, 'minutes').valueOf();
+const defaultDuration = moment.duration(90, 'milliseconds');
 
 const movieSchema = new Schema({
     title: {

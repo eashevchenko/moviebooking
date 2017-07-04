@@ -1,6 +1,7 @@
 const Cinema = require('../model/cinema');
 
 const {initMessageObj, messages} = require('../helpers/messageHelper');
+const moment  = require('moment');
 
 module.exports = {
 
@@ -62,16 +63,31 @@ module.exports = {
         }
     },
 
+
+    //2017-07-04T08:03:43.560Z
+
     getCinemaMoviesByDate: async (req, res, next) => {
         try {
-            const {id} = req.params;
+            const {id, from} = req.params;
+
+            const queryDate = from.slice(0, 10);
+            const endDate = moment(queryDate, "YYYY-MM-DD").add(1, 'days');
 
             const options = {
                 path: 'halls',
                 model: 'hall',
+                select: {'showTimes': 1},
+                match: {showTimes: {$exists: true, $ne: []}},
                 populate: {
-                    path: 'movies',
-                    model: 'movie'
+                    path: 'showTimes',
+                    model: 'showtime',
+                    select: {'start': 1, 'movie': 1},
+                    match: {start: {"$gte": queryDate, "$lte": endDate}},
+                    populate: {
+                        path: 'movie',
+                        model: 'movie',
+                        select: {'title': 1, 'timeDuration': 1}
+                    }
                 }
             };
 
@@ -80,6 +96,8 @@ module.exports = {
             if(!cinemaMovies) {
                 return res.status(404).json(initMessageObj(messages.moviesNotFoundMessage));
             }
+
+
 
             res.status(200).json(cinemaMovies.halls);
         } catch (err) {

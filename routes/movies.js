@@ -6,14 +6,14 @@ const MoviesController = require('../controllers/movies');
 
 router.route('/')
     .get(MoviesController.getMovies)
-    .post(validateBody(schema.movieSchema), MoviesController.createMovie);
+    .post([validateBody(schema.movieSchema)], MoviesController.createMovie);
 
 router.route('/:id')
-    .get(validate(schema.idSchema, 'id'), MoviesController.getMovieById)
+    .get([validate(schema.idSchema, 'id')], MoviesController.getMovieById)
     .put(MoviesController.updateMovie)
     .delete(MoviesController.removeMovie);
 
 router.route('/:id/showtimes')
-      .get(validate(schema.idSchema, 'id'), MoviesController.getMovieShowTimes);
+      .get([validate(schema.idSchema, 'id')], MoviesController.getMovieShowTimes);
 
 module.exports = router;

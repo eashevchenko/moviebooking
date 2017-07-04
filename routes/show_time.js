@@ -9,7 +9,7 @@ router.route('/')
       .get(ShowTimeController.getShowTimes);
 
 router.route('/:id')
-      .get(validate(schema.idSchema, 'id'), ShowTimeController.getShowTime)
-      .post(validate(schema.idSchema, 'id'), ShowTimeController.createShowTime);
+      .get([validate(schema.idSchema, 'id')], ShowTimeController.getShowTime)
+      .post([validate(schema.idSchema, 'id')], ShowTimeController.createShowTime);
 
 module.exports = router;

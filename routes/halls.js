@@ -8,11 +8,12 @@ router.route('/')
     .get(HallsController.getHalls);
 
 router.route('/:id')
-    .get(validate(schema.idSchema, 'id'), HallsController.getHallById)
-    .post(validate(schema.idSchema, 'id'), validateBody(schema.hallSchema), HallsController.createHallByCinema);
+    .get([validate(schema.idSchema, 'id')], HallsController.getHallById)
+    .post([validate(schema.idSchema, 'id'),
+           validateBody(schema.hallSchema)], HallsController.createHallByCinema);
 
 router.route('/:id/cinema')
-    .get(validate(schema.idSchema, 'id'), HallsController.getHallCinema);
+    .get([validate(schema.idSchema, 'id')], HallsController.getHallCinema);
 
 router.route('/title')
       .get(HallsController.getHallByTitle);

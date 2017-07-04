@@ -31,8 +31,19 @@ module.exports = {
         idSchema: Joi.object().keys({
             id: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required()
         }),
+        queryDateSchema: Joi.object().keys({
+            from: Joi.date().required(),
+            to: Joi.date()
+        }),
+        timestampSchema: Joi.object().keys({
+            timestamp: Joi.date().timestamp().required()
+        }),
         movieSchema: Joi.object().keys({
             title: Joi.string().required()
+        }),
+        cinemaSchema: Joi.object().keys({
+            title: Joi.string().required(),
+            address: Joi.string().required()
         }),
         hallSchema: Joi.object().keys({
             title: Joi.string().required(),

@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const showTimeSchema = new Schema({
     start: {
         type: Date,
-        default: moment().valueOf()
+        default: moment().utc().valueOf()
     },
     hall: {
         type: Schema.Types.ObjectId,

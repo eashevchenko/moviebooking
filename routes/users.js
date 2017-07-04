@@ -9,8 +9,8 @@ router.route('/')
     .post(UsersController.createUser);
 
 router.route('/:id')
-    .get(validate(schema.idSchema, 'id'), UsersController.getUser)
-    .put(validate(schema.idSchema, 'id'), UsersController.updateUser)
-    .delete(validate(schema.idSchema, 'id'), UsersController.removeUser);
+    .get([validate(schema.idSchema, 'id')], UsersController.getUser)
+    .put([validate(schema.idSchema, 'id')], UsersController.updateUser)
+    .delete([validate(schema.idSchema, 'id')], UsersController.removeUser);
 
 module.exports = router;
