@@ -42,21 +42,6 @@ module.exports = {
         }
     },
 
-    getCinemaByTitle: async (req, res, next) => {
-        try {
-            const {title} = req.body;
-
-            const cinema = await Cinema.find({
-                title: title
-            });
-
-            cinema ? res.status(200).json(cinema)
-                   : res.status(404).json(initMessageObj(messages.cinemaNotFoundMessage));
-        } catch (err) {
-            next(err);
-        }
-    },
-
     getCinemaHalls: async (req, res, next) => {
         try {
             const {id} = req.params;
