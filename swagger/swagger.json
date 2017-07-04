@@ -3,10 +3,7 @@
   "info": {
     "description": "This is API of movie booking service",
     "version": "0.1.0",
-    "title": "Movie booking API",
-    "license": {
-      "name": "MIT"
-    }
+    "title": "Movie booking API"
   },
   "tags": [
     {
@@ -461,6 +458,13 @@
       }
     }
   },
+  "securityDefinitions": {
+    "bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
   "definitions": {
     "Cinema": {
       "type": "object",
@@ -495,9 +499,5 @@
         }
       }
     }
-  },
-  "externalDocs": {
-    "description": "Find out more about Swagger",
-    "url": "http://swagger.io"
   }
 }
