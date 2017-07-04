@@ -63,9 +63,6 @@ module.exports = {
         }
     },
 
-
-    //2017-07-04T08:03:43.560Z
-
     getCinemaMoviesByDate: async (req, res, next) => {
         try {
             const {id, from} = req.params;
@@ -96,8 +93,6 @@ module.exports = {
             if(!cinemaMovies) {
                 return res.status(404).json(initMessageObj(messages.moviesNotFoundMessage));
             }
-
-
 
             res.status(200).json(cinemaMovies.halls);
         } catch (err) {
