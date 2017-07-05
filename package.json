@@ -13,13 +13,14 @@
   "author": "Eugene Shevchenko",
   "license": "MIT",
   "dependencies": {
+    "bcrypt": "^1.0.2",
     "body-parser": "^1.17.1",
     "express": "^4.15.0",
     "joi": "^10.6.0",
-    "jsonwebtoken": "^7.4.1",
     "moment": "^2.18.1",
     "mongoose": "^4.10.8",
     "morgan": "^1.8.2",
+    "passport": "^0.3.2",
     "swagger-ui-express": "^2.0.1"
   },
   "devDependencies": {
