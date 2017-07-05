@@ -56,5 +56,16 @@ module.exports = {
             title: Joi.string().required(),
             places: Joi.number().integer().min(1).required()
         }),
+        userSchema: Joi.object().keys({
+            firstName: Joi.string(),
+            lastName: Joi.string(),
+            phoneNumber: Joi.string(),
+            email: Joi.string().email().required(),
+            password: Joi.string().required()
+        }),
+        authSchema: Joi.object().keys({
+            email: Joi.string().email().required(),
+            password: Joi.string().required()
+        })
     }
 };

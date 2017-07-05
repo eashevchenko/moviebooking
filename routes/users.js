@@ -2,21 +2,22 @@ const express = require('express');
 const router = express.Router();
 
 const UsersController = require('../controllers/users');
-const {validate, schema} = require('../helpers/routeHelper');
+const {validate, validateBody, schema} = require('../helpers/routeHelper');
+const {authenticate} = require('../helpers/authHelper');
 
 //documented in Swagger
 router.route('/')
-    .get(UsersController.getUsers)
-    .post(UsersController.createUser);
+    .get([authenticate], UsersController.getUsers)
+    .post([validateBody(schema.userSchema)], UsersController.createUser);
 
 //documented in Swagger
 router.route('/list')
-    .get(UsersController.getUsersByPagination);
+    .get([authenticate], UsersController.getUsersByPagination);
 
 //documented in Swagger
 router.route('/:id')
-    .get([validate(schema.idSchema, 'id')], UsersController.getUser)
+    .get([authenticate, validate(schema.idSchema, 'id')], UsersController.getUser)
     .put([validate(schema.idSchema, 'id')], UsersController.updateUser)
-    .delete([validate(schema.idSchema, 'id')], UsersController.removeUser);
+    .delete([authenticate, validate(schema.idSchema, 'id')], UsersController.removeUser);
 
 module.exports = router;

@@ -15,6 +15,44 @@
     "http"
   ],
   "paths": {
+    "/auth": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Auth user",
+        "description": "",
+        "operationId": "login",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Object for auth",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Auth"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "405": {
+            "description": "Validation exception"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      }
+    },
     "/cinemas": {
       "get": {
         "tags": [
@@ -870,7 +908,12 @@
           "200": {
             "description": "ok"
           }
-        }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
       },
       "post": {
         "tags": [
@@ -1085,6 +1128,23 @@
     }
   },
   "definitions": {
+    "Auth": {
+      "type": "object",
+      "required": [
+        "email",
+        "password"
+      ],
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "user@gmail.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "user"
+        }
+      }
+    },
     "Cinema": {
       "type": "object",
       "required": [
@@ -1174,6 +1234,10 @@
         "lastName": {
           "type": "string",
           "example": "Smith"
+        },
+        "email": {
+          "type": "string",
+          "example": "user@gmail.com"
         },
         "password": {
           "type": "password",

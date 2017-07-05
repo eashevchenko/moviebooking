@@ -10,7 +10,7 @@ const mongooseOptions = {
 };
 
 mongoose.connect(dbUri, mongooseOptions);
-//mongoose.connection.openUri(dbUri);
+mongoose.set('debug', true);
 
 connection.on('connected', () => console.log(`Mongoose connected to ${dbUri}`));
 connection.on('error', (err) => console.error('MongoDB error: %s', err));
