@@ -253,7 +253,7 @@
             "in": "path",
             "description": "Query date in {YYYY-MM-DD} format",
             "required": true,
-            "type": "string",
+            "type": "date",
             "default": "2017-07-04"
           }
         ],
@@ -700,6 +700,381 @@
           }
         }
       }
+    },
+    "/showtimes": {
+      "get": {
+        "tags": [
+          "showtime"
+        ],
+        "summary": "Get all showtimes",
+        "description": "",
+        "operationId": "getShowTimes",
+        "consumes": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      }
+    },
+    "/showtimes/list": {
+      "get": {
+        "tags": [
+          "showtime"
+        ],
+        "summary": "Finds Showtimes by pagination",
+        "description": "",
+        "operationId": "getShowTimesByPagination",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page number",
+            "required": false,
+            "type": "string",
+            "default": "1"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "limit of showtimes",
+            "required": false,
+            "type": "string",
+            "default": "3"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "order list of showtimes",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ],
+              "default": "asc"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Cinema"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/showtimes/{id}": {
+      "get": {
+        "tags": [
+          "showtime"
+        ],
+        "summary": "Find showtime by ID",
+        "description": "Returns a single showtime",
+        "operationId": "getShowTimeById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of showtime to return",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Movie"
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "ShowTime not found"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "showtime"
+        ],
+        "summary": "Create new showtime according to movie",
+        "description": "",
+        "operationId": "createShowTime",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of hall to create showtime",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "ShowTime object that needs to be added to the store",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ShowTimeToCreate"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "405": {
+            "description": "Validation exception"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Get all users",
+        "description": "",
+        "operationId": "getUsers",
+        "consumes": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Create new user",
+        "description": "",
+        "operationId": "createUser",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User object that needs to be added to the store",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "405": {
+            "description": "Validation exception"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      }
+    },
+    "/users/list": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Finds users by pagination",
+        "description": "",
+        "operationId": "getUsersByPagination",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page number",
+            "required": false,
+            "type": "string",
+            "default": "1"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "limit of users",
+            "required": false,
+            "type": "string",
+            "default": "3"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "order list of users",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ],
+              "default": "asc"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Cinema"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Find user by ID",
+        "description": "Returns a single user",
+        "operationId": "getUserById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of user to return",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Update user",
+        "description": "",
+        "operationId": "updateUser",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of user to update",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "User object that needs to be updated",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "405": {
+            "description": "Validation exception"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Deletes a user",
+        "description": "",
+        "operationId": "removeUser",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User id to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
     }
   },
   "securityDefinitions": {
@@ -764,6 +1139,49 @@
         "timeDuration": {
           "type": "number",
           "example": "15000"
+        }
+      }
+    },
+    "ShowTime": {
+      "type": "object",
+      "properties": {
+        "start": {
+          "type": "date",
+          "example": "2017-07-04"
+        }
+      }
+    },
+    "ShowTimeToCreate": {
+      "type": "object",
+      "properties": {
+        "start": {
+          "type": "date",
+          "example": "2017-07-07T09:12:07.015Z"
+        },
+        "movieId": {
+          "type": "string",
+          "example": "595b5cf0ebd87e67c227444c"
+        }
+      }
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "type": "string",
+          "example": "John"
+        },
+        "lastName": {
+          "type": "string",
+          "example": "Smith"
+        },
+        "password": {
+          "type": "password",
+          "example": "user"
+        },
+        "phoneNumber": {
+          "type": "string",
+          "example": "+38012345"
         }
       }
     }
