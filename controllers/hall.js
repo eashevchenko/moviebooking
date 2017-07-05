@@ -7,7 +7,10 @@ module.exports = {
 
     getHalls: async (req, res, next) => {
         try {
-            const halls = await Hall.find({}).sort({ title: 'desc' });
+            const halls = await Hall
+                .find({})
+                .sort({title: 'desc'});
+
             res.status(200).json(halls);
         } catch (err) {
             next(err);
@@ -19,12 +22,17 @@ module.exports = {
 
             const {page, limit, sort} = req.query;
 
-            const pageRes = parseInt(page) ||  getDefaultValues.defaultPage;
+            const pageRes = parseInt(page) || getDefaultValues.defaultPage;
             const limitRes = parseInt(limit) || getDefaultValues.defaultLimit;
             const sortRes = sort || getDefaultValues.defaultSort;
 
             const skipRes = (pageRes * limitRes) - limitRes;
-            const paginatedHalls = await Hall.find({}).skip(skipRes).limit(limitRes).sort({ title: sortRes });
+            const paginatedHalls = await Hall
+                .find({})
+                .skip(skipRes)
+                .limit(limitRes)
+                .sort({title: sortRes});
+
             res.status(200).json(paginatedHalls);
         } catch (err) {
             next(err);
@@ -34,9 +42,10 @@ module.exports = {
     getHallById: async (req, res, next) => {
         try {
             const {id} = req.params;
-            const hall = await Hall.findById(id);
+            const hall = await Hall
+                .findById(id);
 
-            if(!hall) {
+            if (!hall) {
                 return res.status(404).json(initMessageObj(messages.hallNotFoundMessage));
             }
 
@@ -50,14 +59,16 @@ module.exports = {
         try {
             const {id} = req.params;
             const options = {
-              path: 'cinema',
-              select: {'title': 1, 'address': 1}
+                path: 'cinema',
+                select: {'title': 1, 'address': 1}
             };
 
-            const hallCinema = await Hall.findById(id).populate(options);
+            const hallCinema = await Hall
+                .findById(id)
+                .populate(options);
 
-            if(!hallCinema) {
-                return  res.status(404).json(initMessageObj(messages.cinemaNotFoundMessage));
+            if (!hallCinema) {
+                return res.status(404).json(initMessageObj(messages.cinemaNotFoundMessage));
             }
 
             res.status(200).json(hallCinema.cinema);
@@ -69,18 +80,18 @@ module.exports = {
     createHallByCinema: async (req, res, next) => {
         try {
             const {id} = req.params;
-            const cinema = await Cinema.findById(id);
+            const cinema = await Cinema
+                .findById(id);
 
-            if(!cinema) return res.status(404).json(initMessageObj(messages.cinemaNotFoundMessage));
+            if (!cinema) return res.status(404).json(initMessageObj(messages.cinemaNotFoundMessage));
 
             const hall = new Hall(req.body);
 
             hall.cinema = cinema._id;
 
-            await hall.save();
-
             cinema.halls.push(hall);
 
+            await hall.save();
             await cinema.save();
 
             res.status(201).json(hall);

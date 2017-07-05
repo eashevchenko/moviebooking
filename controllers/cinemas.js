@@ -1,13 +1,15 @@
 const Cinema = require('../model/cinema');
 const {initMessageObj, messages} = require('../helpers/messageHelper');
 const {getDefaultValues} = require('../helpers/appHelper');
-const moment  = require('moment');
+const moment = require('moment');
 
 module.exports = {
 
     getCinemas: async (req, res, next) => {
         try {
-            const cinemas = await Cinema.find({});
+            const cinemas = await Cinema
+                .find({});
+
             res.status(200).json(cinemas);
         } catch (err) {
             next(err);
@@ -15,28 +17,37 @@ module.exports = {
     },
 
     getCinemasByPagination: async (req, res, next) => {
-      try {
-          const {page, limit, sort} = req.query;
+        try {
+            const {page, limit, sort} = req.query;
 
-          const pageRes = parseInt(page) ||  getDefaultValues.defaultPage;
-          const limitRes = parseInt(limit) || getDefaultValues.defaultLimit;
-          const sortRes = sort || getDefaultValues.defaultSort;
+            const pageRes = parseInt(page) || getDefaultValues.defaultPage;
+            const limitRes = parseInt(limit) || getDefaultValues.defaultLimit;
+            const sortRes = sort || getDefaultValues.defaultSort;
 
-          const skipRes = (pageRes * limitRes) - limitRes;
-          const paginatedCinemas = await Cinema.find({}).skip(skipRes).limit(limitRes).sort({ title: sortRes });
-          res.status(200).json(paginatedCinemas);
-      } catch (err) {
-          next(err);
-      }
+            const skipRes = (pageRes * limitRes) - limitRes;
+            const paginatedCinemas = await Cinema
+                .find({})
+                .skip(skipRes)
+                .limit(limitRes)
+                .sort({title: sortRes});
+
+            res.status(200).json(paginatedCinemas);
+        } catch (err) {
+            next(err);
+        }
     },
 
     getCinemaById: async (req, res, next) => {
         try {
             const {id} = req.params;
-            const cinema = await Cinema.findById(id);
+            const cinema = await Cinema
+                .findById(id);
 
-            cinema ? res.status(200).json(cinema)
-                   : res.status(404).json(initMessageObj(messages.cinemaNotFoundMessage));
+            if (!cinema) {
+                return res.status(404).json(initMessageObj(messages.cinemaNotFoundMessage));
+            }
+
+            res.status(200).json(cinema)
         } catch (err) {
             next(err);
         }
@@ -51,7 +62,9 @@ module.exports = {
                 select: {'title': 1, 'places': 1}
             };
 
-            const cinemaHalls = await Cinema.findById(id).populate(options);
+            const cinemaHalls = await Cinema
+                .findById(id)
+                .populate(options);
 
             if (!cinemaHalls) {
                 return res.status(404).json(initMessageObj(messages.hallNotFoundMessage));
@@ -89,9 +102,11 @@ module.exports = {
                 }
             };
 
-            const cinemaMovies = await Cinema.findById(id).populate(options);
+            const cinemaMovies = await Cinema
+                .findById(id)
+                .populate(options);
 
-            if(!cinemaMovies) {
+            if (!cinemaMovies) {
                 return res.status(404).json(initMessageObj(messages.moviesNotFoundMessage));
             }
 
@@ -100,7 +115,7 @@ module.exports = {
             const cinemaObj = cinemaMovies.toObject();
             const showTimesArr = cinemaObj.halls[0].showTimes;
 
-            if(showTimesArr && showTimesArr.length === 0) {
+            if (showTimesArr && showTimesArr.length === 0) {
                 return res.status(404).json(initMessageObj(messages.moviesNotFoundMessage));
             }
 
@@ -114,6 +129,7 @@ module.exports = {
         try {
             const cinema = new Cinema(req.body);
             const savedCinema = await cinema.save();
+
             res.status(201).json(savedCinema);
         } catch (err) {
             next(err);
@@ -125,7 +141,7 @@ module.exports = {
             const {id} = req.params;
             await Cinema.findByIdAndRemove(id);
 
-            if(!cinema) {
+            if (!cinema) {
                 res.status(404).json(initMessageObj(messages.cinemaNotFoundMessage));
             }
             res.status(205).json(initMessageObj(messages.removedCinemaMessage));

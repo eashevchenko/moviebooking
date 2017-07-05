@@ -8,7 +8,9 @@ module.exports = {
 
     getShowTimes: async (req, res, next) => {
         try {
-            const showTimes = await ShowTime.find({});
+            const showTimes = await ShowTime
+                .find({});
+
             res.status(200).json(showTimes);
         } catch (err) {
             next(err);
@@ -25,7 +27,12 @@ module.exports = {
             const sortRes = sort || getDefaultValues.defaultSort;
 
             const skipRes = (pageRes * limitRes) - limitRes;
-            const paginatedCinemas = await ShowTime.find({}).skip(skipRes).limit(limitRes).sort({ title: sortRes });
+            const paginatedCinemas = await ShowTime
+                .find({})
+                .skip(skipRes)
+                .limit(limitRes)
+                .sort({ title: sortRes });
+
             res.status(200).json(paginatedCinemas);
         } catch (err) {
             next(err);
@@ -35,7 +42,13 @@ module.exports = {
     getShowTime: async (req, res, next) => {
         try {
             const {id} = req.params;
-            const showTime = await ShowTime.findById(id);
+            const showTime = await ShowTime
+                .findById(id);
+
+            if(!showTime) {
+                return res.status(404).json(initMessageObj(messages.notFoundShowTime));
+            }
+
             res.status(200).json(showTime);
         } catch (err) {
             next(err);
@@ -52,9 +65,11 @@ module.exports = {
             // send id of movie
             const movieId = req.body.movieId;
 
-            if(!movieId) return res.status(404).json(initMessageObj(messages.movieNotFoundMessage));
-
             const movie = await Movie.findById(movieId);
+
+            if(!movie) {
+                return res.status(404).json(initMessageObj(messages.movieNotFoundMessage));
+            }
 
             showTime.hall = hall;
             showTime.movie = movie;
