@@ -1,0 +1,33 @@
+version: "2"
+services:
+  app:
+    build: .
+    command: "pm2-docker process.json --web"
+    ports:
+      - "5000:3000"
+      - "9555:9615"
+    depends_on:
+       - mongodb
+    environment:
+      NODE_ENV: development
+      MONGODB_HOST: mongodb
+      MONGODB_DATABASE: "mbooking"
+    volumes:
+      - /usr/src/app/node_modules
+
+  mongodb:
+    image: mongo
+    ports:
+      - 27057:27017
+    volumes:
+      - "mongodb:/data/db"
+    command: --smallfiles --rest
+
+volumes:
+  mongodb:
+    external:
+      name: mongodb
+
+networks:
+  default:
+    driver: bridge
