@@ -104,7 +104,12 @@
           "400": {
             "description": "Bad request"
           }
-        }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
       }
     },
     "/cinemas/list": {
@@ -144,7 +149,7 @@
             "items": {
               "type": "string",
               "enum": [
-                "asc",
+                "ascs",
                 "desc"
               ],
               "default": "asc"
@@ -225,7 +230,12 @@
           "404": {
             "description": "Cinema not found"
           }
-        }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
       }
     },
     "/cinemas/{id}/halls": {
@@ -546,7 +556,12 @@
           "400": {
             "description": "Bad request"
           }
-        }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
       }
     },
     "/movies/list": {
@@ -672,7 +687,12 @@
           "404": {
             "description": "Not found"
           }
-        }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
       },
       "delete": {
         "tags": [
@@ -700,7 +720,12 @@
           "404": {
             "description": "Movie not found"
           }
-        }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
       }
     },
     "/movies/{id}/showtimes": {
@@ -890,7 +915,12 @@
           "400": {
             "description": "Bad request"
           }
-        }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
       }
     },
     "/users": {
@@ -1006,7 +1036,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
       }
     },
     "/users/{id}": {
@@ -1042,7 +1077,12 @@
           "404": {
             "description": "User not found"
           }
-        }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
       },
       "put": {
         "tags": [
@@ -1088,7 +1128,12 @@
           "404": {
             "description": "User not found"
           }
-        }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
       },
       "delete": {
         "tags": [
@@ -1116,7 +1161,12 @@
           "404": {
             "description": "User not found"
           }
-        }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
       }
     }
   },

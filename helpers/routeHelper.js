@@ -1,10 +1,30 @@
 const Joi = require('joi');
 
 module.exports = {
-    validate: (schema, name) => {
+    validateQuery: (schema, arrNames) => {
         return (req, res, next) => {
             let validateObj = {};
-            validateObj[name] = req['params'][name];
+
+            for(let name of arrNames) {
+                validateObj[name] = req['query'][name];
+            }
+
+            const result = Joi.validate(validateObj, schema);
+            if (result.error) {
+                return res.status(400).json(result.error);
+            } else {
+                next();
+            }
+        }
+    },
+
+    validateParams: (schema, arrNames) => {
+        return (req, res, next) => {
+            let validateObj = {};
+
+            for(let name of arrNames) {
+                validateObj[name] = req['params'][name];
+            }
 
             const result = Joi.validate(validateObj, schema);
             if (result.error) {
@@ -32,8 +52,9 @@ module.exports = {
             id: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required()
         }),
         paginateSchema: Joi.object().keys({
-            page: Joi.number().required(),
-            size: Joi.number().required()
+            page: Joi.number(),
+            size: Joi.number(),
+            sort: Joi.string().valid('asc', 'desc')
         }),
         queryDateSchema: Joi.object().keys({
             from: Joi.date().required(),

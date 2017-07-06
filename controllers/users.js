@@ -1,7 +1,10 @@
 const User = require('../model/user');
+const Role = require('../model/user_roles');
 const {getDefaultValues} = require('../helpers/appHelper');
 const {initMessageObj, messages} = require('../helpers/messageHelper');
 const {decodePassword} = require('../helpers/passwordHelper');
+
+const userRoleDef = 'viewer';
 
 module.exports = {
 
@@ -55,7 +58,14 @@ module.exports = {
     createUser: async (req, res, next) => {
         try {
             const user = new User(Object.assign(req.body, {password: await decodePassword(req.body.password)}));
+            const roleObj = {
+              user: user,
+              roleType: userRoleDef
+            };
+            const role = new Role(roleObj);
+
             await user.save();
+            await role.save();
 
             res.status(201).json(initMessageObj(messages.userSaved));
         } catch (err) {

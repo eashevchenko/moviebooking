@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 
 const ShowTimeController = require('../controllers/show_time');
-const {validate, schema} = require('../helpers/routeHelper');
+const {validateParams, validateQuery, schema} = require('../helpers/routeHelper');
+const {authenticate} = require('../helpers/authHelper');
 
 // documented in Swagger
 router.route('/')
@@ -10,11 +11,15 @@ router.route('/')
 
 // documented in Swagger
 router.route('/list')
-    .get(ShowTimeController.getShowTimesByPagination);
+    .get([validateQuery(schema.paginateSchema, ['sort'])],
+          ShowTimeController.getShowTimesByPagination);
 
 // documented in Swagger
 router.route('/:id')
-      .get([validate(schema.idSchema, 'id')], ShowTimeController.getShowTime)
-      .post([validate(schema.idSchema, 'id')], ShowTimeController.createShowTime);
+      .get([validateParams(schema.idSchema, ['id'])],
+            ShowTimeController.getShowTime)
+      .post([authenticate,
+             validateParams(schema.idSchema, ['id'])],
+             ShowTimeController.createShowTime);
 
 module.exports = router;

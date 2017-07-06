@@ -14,8 +14,6 @@ module.exports = {
     authenticate: (req, res, next) => {
         const {authorization} = req.headers;
 
-        console.log('token:  ', req.headers);
-
         jwt.verify(authorization, secret.secretKey, async (err, decoded) => {
             if (err) {
                 return res.sendStatus(401);

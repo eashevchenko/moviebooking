@@ -7,6 +7,10 @@ const userSchema = new Schema({
     email: String,
     password: String,
     phoneNumber: String,
+    role:{
+        type: Schema.Types.ObjectId,
+        ref: 'role'
+    },
     tickets: [{
         type: Schema.Types.ObjectId,
         ref: 'ticket'
