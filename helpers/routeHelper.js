@@ -84,9 +84,15 @@ module.exports = {
             email: Joi.string().email().required(),
             password: Joi.string().required()
         }),
+        managerSchema: Joi.object().keys({
+            code: Joi.number().integer().min(16).required()
+        }),
         authSchema: Joi.object().keys({
             email: Joi.string().email().required(),
             password: Joi.string().required()
+        }),
+        inviteSchema: Joi.object().keys({
+            email: Joi.string().email().required()
         })
     }
 };

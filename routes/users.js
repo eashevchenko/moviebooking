@@ -10,12 +10,20 @@ router.route('/')
     .get([authenticate],
           UsersController.getUsers)
     .post([validateBody(schema.userSchema)],
-           UsersController.createUser);
+           UsersController.createViewer);
+
+//documented in Swagger
+router.route('/invite')
+      .get([authenticate,validateQuery(schema.inviteSchema, ['email'])], UsersController.inviteManager);
+
+//documented in Swagger
+router.route('/manager')
+      .post([validateQuery(schema.managerSchema, ['code'])],UsersController.createManager);
 
 //documented in Swagger
 router.route('/list')
     .get([authenticate,
-          validateQuery(schema.paginateSchema, ['sort'])],
+          validateQuery(schema.paginateSchema, ['page', 'limit', 'sort'])],
           UsersController.getUsersByPagination);
 
 //documented in Swagger

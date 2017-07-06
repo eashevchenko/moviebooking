@@ -926,7 +926,7 @@
     "/users": {
       "get": {
         "tags": [
-          "user"
+          "manager"
         ],
         "summary": "Get all users",
         "description": "",
@@ -985,7 +985,7 @@
     "/users/list": {
       "get": {
         "tags": [
-          "user"
+          "manager"
         ],
         "summary": "Finds users by pagination",
         "description": "",
@@ -1047,7 +1047,7 @@
     "/users/{id}": {
       "get": {
         "tags": [
-          "user"
+          "manager"
         ],
         "summary": "Find user by ID",
         "description": "Returns a single user",
@@ -1128,16 +1128,11 @@
           "404": {
             "description": "User not found"
           }
-        },
-        "security": [
-          {
-            "bearer": []
-          }
-        ]
+        }
       },
       "delete": {
         "tags": [
-          "user"
+          "manager"
         ],
         "summary": "Deletes a user",
         "description": "",
@@ -1167,6 +1162,93 @@
             "bearer": []
           }
         ]
+      }
+    },
+    "/users/invite": {
+      "get": {
+        "tags": [
+          "manager"
+        ],
+        "summary": "Invite new manager",
+        "description": "",
+        "operationId": "inviteManager",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "description": "invite user email",
+            "required": true,
+            "type": "string",
+            "default": "user@gmail.com"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "405": {
+            "description": "Validation exception"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/users/manager": {
+      "post": {
+        "tags": [
+          "manager"
+        ],
+        "summary": "Create new manager",
+        "description": "",
+        "operationId": "createManager",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "description": "invite code",
+            "required": true,
+            "type": "number"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "create new manager",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "405": {
+            "description": "Validation exception"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
       }
     }
   },
@@ -1296,6 +1378,15 @@
         "phoneNumber": {
           "type": "string",
           "example": "+38012345"
+        }
+      }
+    },
+    "Invite": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "user@gmail.com"
         }
       }
     }

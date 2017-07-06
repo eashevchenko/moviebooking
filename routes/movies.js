@@ -14,7 +14,7 @@ router.route('/')
 
 //documented in Swagger
 router.route('/list')
-    .get([validateQuery(schema.paginateSchema, ['sort'])],
+    .get([validateQuery(schema.paginateSchema, ['page', 'limit', 'sort'])],
           MoviesController.getMoviesByPagination);
 
 //documented in Swagger

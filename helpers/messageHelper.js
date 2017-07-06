@@ -16,6 +16,8 @@ module.exports = {
         moviesNotFoundMessage: 'movies not found !',
         hallNotFoundMessage: 'hall not found !',
         parametersRequired: 'request parameters are required !',
-        userSaved: 'user was saved !'
+        userSaved: 'user was saved !',
+        userExists: 'user is already exists !',
+        inviteCodeNotFound: 'invite code is incorrect !'
     },
 };
