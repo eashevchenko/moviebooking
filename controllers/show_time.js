@@ -55,6 +55,8 @@ module.exports = {
         }
     },
 
+
+    //TODO show time must be created if movie time (which translated) not across with show time
     createShowTime: async (req, res, next) => {
         try {
             const {id} = req.params;
@@ -66,6 +68,8 @@ module.exports = {
             const movieId = req.body.movieId;
 
             const movie = await Movie.findById(movieId);
+
+
 
             if(!movie) {
                 return res.status(404).json(initMessageObj(messages.movieNotFoundMessage));
