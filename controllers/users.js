@@ -12,7 +12,6 @@ module.exports = {
     getUsers: async (req, res, next) => {
         try {
             const users = await User
-                .find({})
                 .select({password: 0, tickets: 0});
 
             res.status(200).json(users);
@@ -30,11 +29,8 @@ module.exports = {
             const limitRes = parseInt(limit) || getDefaultValues.defaultLimit;
             const sortRes = sort || getDefaultValues.defaultSort;
 
-            const skipRes = (pageRes * limitRes) - limitRes;
             const paginatedUsers = await User
-                .find({})
-                .skip(skipRes)
-                .limit(limitRes)
+                .paginate(pageRes, limitRes)
                 .sort({title: sortRes})
                 .select({password: 0, tickets: 0});
 

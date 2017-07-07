@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
+mongoose.plugin(require('./plugins/customQuery'));
+
 const dbUri = 'mongodb://localhost:27017/mbooking';
 const connection = mongoose.connection;
 

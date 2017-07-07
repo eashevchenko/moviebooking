@@ -26,11 +26,9 @@ module.exports = {
             const limitRes = parseInt(limit) || getDefaultValues.defaultLimit;
             const sortRes = sort || getDefaultValues.defaultSort;
 
-            const skipRes = (pageRes * limitRes) - limitRes;
             const paginatedHalls = await Hall
                 .find({})
-                .skip(skipRes)
-                .limit(limitRes)
+                .paginate(pageRes, limitRes)
                 .sort({title: sortRes});
 
             res.status(200).json(paginatedHalls);
