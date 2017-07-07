@@ -67,8 +67,7 @@ module.exports = {
 
             const movie = await Movie.findById(movieId);
 
-
-
+            showTime.end = movie.timeDuration;
             if(!movie) {
                 return res.status(404).json(initMessageObj(messages.movieNotFoundMessage));
             }
@@ -82,7 +81,6 @@ module.exports = {
             await showTime.save();
             await movie.save();
             await hall.save();
-
             res.status(201).json(showTime);
         } catch (err) {
             next(err);

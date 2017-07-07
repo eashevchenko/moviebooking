@@ -9,7 +9,7 @@ const userSchema = new Schema({
     email: String,
     password: String,
     phoneNumber: String,
-    role:{
+    role: {
         type: Schema.Types.ObjectId,
         ref: 'role'
     },
@@ -24,8 +24,17 @@ const userSchema = new Schema({
     }
 });
 
+userSchema.statics.byEmail = function (email) {
+    return this.find({email: email});
+};
+
+userSchema.virtual('fullName')
+    .get(function () {
+        return `${this.firstName} ${this.lastName}`;
+    });
+
 userSchema.methods.createHashedPassword = async function () {
-    this.password =  await decodePassword(this.password);
+    this.password = await decodePassword(this.password);
 };
 
 const User = mongoose.model('user', userSchema);

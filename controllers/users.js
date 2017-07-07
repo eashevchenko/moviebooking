@@ -12,6 +12,7 @@ module.exports = {
     getUsers: async (req, res, next) => {
         try {
             const users = await User
+                .find({})
                 .select({password: 0, tickets: 0});
 
             res.status(200).json(users);
@@ -43,8 +44,7 @@ module.exports = {
     getUser: async (req, res, next) => {
         try {
             const {id} = req.params;
-            const user = await User
-                .findById(id);
+            const user = await User.findById(id);
 
             if (!user) {
                 return res.status(404).json(initMessageObj(messages.notFoundUserMessage));
@@ -54,6 +54,23 @@ module.exports = {
         } catch (err) {
             next(err);
         }
+    },
+
+    searchUser: async (req, res, next) => {
+      try {
+          const {text} = req.query;
+
+          const user = await User
+                .search(text);
+
+            if(!user) {
+              return res.status(404).json(initMessageObj(messages.notFoundUserMessage));
+          }
+
+          res.status(200).json(user);
+      } catch (err) {
+          next(err);
+      }
     },
 
     createViewer: async (req, res, next) => {
@@ -82,9 +99,9 @@ module.exports = {
 
             const {email} = req.query;
 
-            const user = await User.find({email: email});
+            const user = await User.findOne({email: email});
 
-            if (user[0] && user[0].email) {
+            if (user) {
                 return res.status(409).send(messages.userExists);
             }
 

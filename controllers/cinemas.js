@@ -79,30 +79,7 @@ module.exports = {
         try {
             const {id, from} = req.params;
 
-            const queryDate = from.slice(0, 10);
-            const endDate = moment(queryDate, "YYYY-MM-DD").add(1, 'days');
-
-            const options = {
-                path: 'halls',
-                model: 'hall',
-                select: {'showTimes': 1},
-                match: {showTimes: {$exists: true, $ne: []}},
-                populate: {
-                    path: 'showTimes',
-                    model: 'showtime',
-                    select: {'start': 1, 'movie': 1},
-                    match: {start: {"$gte": queryDate, "$lte": endDate}},
-                    populate: {
-                        path: 'movie',
-                        model: 'movie',
-                        select: {'title': 1, 'timeDuration': 1}
-                    }
-                }
-            };
-
-            const cinemaMovies = await Cinema
-                .findById(id)
-                .populate(options);
+            const cinemaMovies = await Cinema.findMoviesByDate(id, from);
 
             if (!cinemaMovies) {
                 return res.status(404).json(initMessageObj(messages.moviesNotFoundMessage));

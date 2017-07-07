@@ -17,5 +17,19 @@ const showTimeSchema = new Schema({
     }
 });
 
+
+showTimeSchema.virtual('end')
+    .set(function (timeDuration) {
+         return moment(this.start).add(timeDuration, 'minutes').utc();
+    });
+
+showTimeSchema.set('toJSON', { virtuals: true });
+showTimeSchema.set('toObject', { virtuals: true });
+
+
+showTimeSchema.methods.isTimeCollided = function () {
+
+};
+
 const ShowTime = mongoose.model('showtime', showTimeSchema);
 module.exports = ShowTime;

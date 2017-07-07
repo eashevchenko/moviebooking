@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 mongoose.plugin(require('./plugins/customQuery'));
+mongoose.plugin(require('./plugins/hiddenPlugin'));
 
 const dbUri = 'mongodb://localhost:27017/mbooking';
 const connection = mongoose.connection;

@@ -29,5 +29,9 @@ const movieSchema = new Schema({
     }],
 });
 
+movieSchema.virtual('end', function () {
+
+});
+
 const Movie = mongoose.model('movie', movieSchema);
 module.exports = Movie;

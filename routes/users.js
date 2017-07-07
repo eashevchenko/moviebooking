@@ -13,6 +13,10 @@ router.route('/')
            UsersController.createViewer);
 
 //documented in Swagger
+router.route('/search')
+    .get(UsersController.searchUser);
+
+//documented in Swagger
 router.route('/invite')
       .get([authenticate,validateQuery(schema.inviteSchema, ['email'])], UsersController.inviteManager);
 
@@ -22,8 +26,8 @@ router.route('/manager')
 
 //documented in Swagger
 router.route('/list')
-    .get([authenticate,
-          validateQuery(schema.paginateSchema, ['page', 'limit', 'sort'])],
+    .get([authenticate],
+       //   validateQuery(schema.paginateSchema, ['page', 'limit', 'sort'])],
           UsersController.getUsersByPagination);
 
 //documented in Swagger

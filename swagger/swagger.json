@@ -982,6 +982,39 @@
         }
       }
     },
+    "/users/search": {
+      "get": {
+        "tags": [
+          "manager"
+        ],
+        "summary": "search users by query",
+        "description": "",
+        "operationId": "searchUsers",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "text",
+            "in": "query",
+            "description": "search text",
+            "required": true,
+            "type": "string",
+            "default": "1"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
     "/users/list": {
       "get": {
         "tags": [
