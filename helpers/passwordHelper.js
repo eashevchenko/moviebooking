@@ -5,7 +5,7 @@ module.exports = {
     decodePassword: async (password) => {
         try {
             const salt = await bcrypt.genSalt(saltRounds);
-            return bcrypt.hash(password, salt);
+            return await bcrypt.hash(password, salt);
         } catch (err) {
             return new Error(err);
         }

@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const {decodePassword} = require('../helpers/passwordHelper');
+
 const userSchema = new Schema({
     firstName: String,
     lastName: String,
@@ -22,5 +24,10 @@ const userSchema = new Schema({
     }
 });
 
+userSchema.methods.createHashedPassword = async function () {
+    this.password =  await decodePassword(this.password);
+};
+
 const User = mongoose.model('user', userSchema);
+
 module.exports = User;

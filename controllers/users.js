@@ -3,7 +3,6 @@ const Role = require('../model/user_roles');
 const Invite = require('../model/invite');
 const {getDefaultValues} = require('../helpers/appHelper');
 const {initMessageObj, messages} = require('../helpers/messageHelper');
-const {decodePassword} = require('../helpers/passwordHelper');
 const {generateInviteCode} = require('../helpers/inviteHelper');
 const {userRoles} = require('../config');
 
@@ -63,14 +62,17 @@ module.exports = {
 
     createViewer: async (req, res, next) => {
         try {
-            const user = new User(Object.assign(req.body, {password: await decodePassword(req.body.password)}));
+            const viewer = new User(req.body);
+
+            await viewer.createHashedPassword();
+
             const roleObj = {
-                user: user,
+                user: viewer,
                 roleType: userRoles.viewer
             };
             const role = new Role(roleObj);
 
-            await user.save();
+            await viewer.save();
             await role.save();
 
             res.status(201).json(initMessageObj(messages.userSaved));
@@ -116,9 +118,12 @@ module.exports = {
             const {email} = req.body;
             const {code} = req.query;
 
-            const user = new User(Object.assign(req.body, {password: await decodePassword(req.body.password)}));
+            const manager = new User(req.body);
+
+            await manager.createHashedPassword();
+
             const roleObj = {
-                user: user,
+                user: manager,
                 roleType: userRoles.manager
             };
 
