@@ -37,5 +37,10 @@ cinemaSchema.statics.findMoviesByDate = function (cinemaId, from) {
     return this.findById(cinemaId).populate(options);
 };
 
+cinemaSchema.statics.findMoviesBetweenDates = function (cinemaId, from, to) {
+    return this.findMoviesBetweenDates(cinemaId, from, to)
+};
+
+
 const Cinema = mongoose.model('cinema', cinemaSchema);
 module.exports = Cinema;

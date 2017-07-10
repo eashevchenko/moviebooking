@@ -34,6 +34,11 @@ router.route('/:id/halls')
 router.route('/:id/movies/:from')
       .get([validateParams(schema.idSchema, ['id']),
             validateParams(schema.queryDateSchema, ['from'])],
-            CinemasController.getCinemaMoviesByDate);
+            CinemasController.getCinemaMoviesBetweenDates);
+
+router.route('/:id/movies')
+    .get([validateParams(schema.idSchema, ['id']),
+          validateQuery(schema.queryDatesSchema, ['from', 'to'])],
+          CinemasController.getCinemaMoviesBetweenDates);
 
 module.exports = router;

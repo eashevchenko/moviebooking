@@ -20,8 +20,8 @@ const customQueryPlugin = schema => {
         return this.find({}).skip(skipRes).limit(limit);
     };
 
-    schema.statics.searchInTimes = function (start, end, time) {
-      return this;
+    schema.statics.searchBetweenDates = function (field, from, to) {
+      return this.find({field: {$gte: from, $lte: to}});
     };
 
 };

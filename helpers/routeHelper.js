@@ -57,8 +57,11 @@ module.exports = {
             sort: Joi.string().valid('asc', 'desc')
         }),
         queryDateSchema: Joi.object().keys({
+            from: Joi.date().required()
+        }),
+        queryDatesSchema: Joi.object().keys({
             from: Joi.date().required(),
-            to: Joi.date()
+            to: Joi.date().required()
         }),
         timestampSchema: Joi.object().keys({
             timestamp: Joi.date().timestamp().required()

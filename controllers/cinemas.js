@@ -100,6 +100,23 @@ module.exports = {
         }
     },
 
+    getCinemaMoviesBetweenDates:  async (req, res, next) => {
+      try {
+          const {id, from , to} = req.params;
+
+          /*const cinemaMovies = await Cinema.findMoviesBetweenDates(id, from, to);
+
+          if(!cinemaMovies) {
+              return re.status(404).json(initMessageObj(messages.movieNotFoundMessage));
+          }
+
+          res.status(200).json(cinemaMovies.halls);*/
+          res.status(200).json({});
+      } catch (err) {
+          next(err);
+      }
+    },
+
     createCinema: async (req, res, next) => {
         try {
             const cinema = new Cinema(req.body);
