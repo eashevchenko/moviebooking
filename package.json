@@ -13,6 +13,7 @@
   "author": "Eugene Shevchenko",
   "license": "MIT",
   "dependencies": {
+    "appmetrics-dash": "^3.3.2",
     "bcrypt": "^1.0.2",
     "body-parser": "^1.17.1",
     "express": "^4.15.0",
@@ -25,6 +26,7 @@
     "mongoose": "^4.10.8",
     "morgan": "^1.8.2",
     "passport": "^0.3.2",
+    "socket.io": "^2.0.3",
     "swagger-ui-express": "^2.0.1",
     "voucher-code-generator": "^1.1.1"
   },
