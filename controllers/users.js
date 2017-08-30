@@ -78,8 +78,6 @@ module.exports = {
         try {
             const viewer = new User(req.body);
 
-            await viewer.createHashedPassword();
-
             const roleObj = {
                 user: viewer,
                 roleType: userRoles.viewer
@@ -133,8 +131,6 @@ module.exports = {
             const {code} = req.query;
 
             const manager = new User(req.body);
-
-            await manager.createHashedPassword();
 
             const roleObj = {
                 user: manager,

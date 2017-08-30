@@ -33,9 +33,24 @@ userSchema.virtual('fullName')
         return `${this.firstName} ${this.lastName}`;
     });
 
-userSchema.methods.createHashedPassword = async function () {
-    this.password = await decodePassword(this.password);
+userSchema.methods.createHashedPassword = async function (next) {
+    try {
+        this.password = await decodePassword(this.password);
+        return next();
+    } catch (err) {
+        return next(err);
+    }
 };
+
+// bcrypt password before save user to the DB
+userSchema.pre('save', async function (next) {
+    try {
+        this.password = await decodePassword(this.password);
+        return next();
+    } catch (err) {
+        return next(err);
+    }
+});
 
 const User = mongoose.model('user', userSchema);
 
