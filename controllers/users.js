@@ -112,6 +112,8 @@ module.exports = {
                 email: email
             };
 
+            //TODO send invite code by the sms
+
             const invite = new Invite(inviteObj);
 
             await invite.save();
