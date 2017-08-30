@@ -1294,6 +1294,49 @@
         ]
       }
     },
+    "/users/notify": {
+      "post": {
+        "tags": [
+          "manager"
+        ],
+        "summary": "Notify message for users",
+        "description": "",
+        "operationId": "notifyUser",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "object for send SMS",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SMS"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "405": {
+            "description": "Validation exception"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
     "/users/manager": {
       "post": {
         "tags": [
@@ -1475,6 +1518,23 @@
         "email": {
           "type": "string",
           "example": "user@gmail.com"
+        }
+      }
+    },
+    "SMS": {
+      "type": "object",
+      "properties": {
+        "body": {
+          "type": "string",
+          "example": "some sms message"
+        },
+        "to": {
+          "type": "string",
+          "example": "+380661136305"
+        },
+        "from": {
+          "type": "string",
+          "example": "+1 415-903-7536 "
         }
       }
     }

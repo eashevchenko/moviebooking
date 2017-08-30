@@ -4,6 +4,7 @@ const Invite = require('../model/invite');
 const {getDefaultValues} = require('../helpers/appHelper');
 const {initMessageObj, messages} = require('../helpers/messageHelper');
 const {generateInviteCode} = require('../helpers/inviteHelper');
+const {sendSMS, createCall} = require('../helpers/twilioHelper');
 const {userRoles} = require('../config');
 
 
@@ -57,20 +58,20 @@ module.exports = {
     },
 
     searchUser: async (req, res, next) => {
-      try {
-          const {text} = req.query;
+        try {
+            const {text} = req.query;
 
-          const user = await User
+            const user = await User
                 .search(text);
 
-            if(!user) {
-              return res.status(404).json(initMessageObj(messages.notFoundUserMessage));
-          }
+            if (!user) {
+                return res.status(404).json(initMessageObj(messages.notFoundUserMessage));
+            }
 
-          res.status(200).json(user);
-      } catch (err) {
-          next(err);
-      }
+            res.status(200).json(user);
+        } catch (err) {
+            next(err);
+        }
     },
 
     createViewer: async (req, res, next) => {
@@ -113,7 +114,7 @@ module.exports = {
                 email: email
             };
 
-            const invite  = new Invite(inviteObj);
+            const invite = new Invite(inviteObj);
 
             await invite.save();
 
@@ -144,12 +145,12 @@ module.exports = {
 
             const invite = await Invite
                 .findOne({
-                   email: email,
-                   code: code,
-                   verified: false
+                    email: email,
+                    code: code,
+                    verified: false
                 });
 
-            if(!invite) {
+            if (!invite) {
                 return res.status(400).send(messages.inviteCodeNotFound);
             }
 
@@ -160,7 +161,7 @@ module.exports = {
 
             res.status(201).json(initMessageObj(messages.userSaved));
         } catch (err) {
-           next(err);
+            next(err);
         }
     },
 
@@ -187,6 +188,17 @@ module.exports = {
             res.status(205).json(initMessageObj(messages.removedUserMessage));
         } catch (err) {
             next(err);
+        }
+    },
+
+    notifyUser: async (req, res, next) => {
+        try {
+            const {body, to, from} = req.body;
+            const smsResponse = await sendSMS(body, to, from);
+            res.status(200).json(smsResponse);
+        } catch (err) {
+            res.status(400).json(err);
+            next(err)
         }
     }
 };

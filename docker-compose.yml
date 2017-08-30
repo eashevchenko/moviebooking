@@ -11,7 +11,9 @@ services:
     environment:
       NODE_ENV: development
       MONGODB_HOST: mongodb
-      MONGODB_DATABASE: "mbooking"
+      MONGODB_DATABASE: "mbooking",
+      TWILIO_API_SID: "ACe6bff8f4cd8c08bd5b088616f2c59c1f",
+      TWILIO_API_TOKEN: "36fb029f5ddd847ed2b7ea641421c0a6",
     volumes:
       - /usr/src/app/node_modules
 

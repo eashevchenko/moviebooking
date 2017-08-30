@@ -42,4 +42,8 @@ router.route('/:id')
              validateParams(schema.idSchema, ['id'])],
              UsersController.removeUser);
 
+//documented in Swagger
+router.route('/notify')
+    .post([authenticate], UsersController.notifyUser);
+
 module.exports = router;
