@@ -13,5 +13,5 @@ const ticketSchema = new Schema({
     orderId: String
 });
 
-const Ticket = mongoose.model('ticket', ticketSchema);
+const Ticket = mongoose.model('ticket', ticketSchema, 'tickets');
 module.exports = Ticket;

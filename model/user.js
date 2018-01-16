@@ -9,10 +9,10 @@ const userSchema = new Schema({
     email: String,
     password: String,
     phoneNumber: String,
-    role: {
+    roles: [{
         type: Schema.Types.ObjectId,
         ref: 'role'
-    },
+    }],
     tickets: [{
         type: Schema.Types.ObjectId,
         ref: 'ticket'
@@ -26,6 +26,10 @@ const userSchema = new Schema({
 
 userSchema.statics.byEmail = function (email) {
     return this.find({email: email});
+};
+
+userSchema.statics.findUserWithRole = function (userId) {
+  return this.findOne(userId).populate('role');
 };
 
 userSchema.virtual('fullName')
@@ -52,6 +56,6 @@ userSchema.pre('save', async function (next) {
     }
 });
 
-const User = mongoose.model('user', userSchema);
+const User = mongoose.model('user', userSchema, 'user');
 
 module.exports = User;

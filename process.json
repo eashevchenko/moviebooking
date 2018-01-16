@@ -1,6 +1,0 @@
-{
-  "apps" : [{
-    "name"       : "app",
-    "watch"      : true
-  }]
-}

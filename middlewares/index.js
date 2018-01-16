@@ -9,8 +9,6 @@ const swaggerDocument = require('../swagger/swagger.json');
 const hystrixDashboard = require('hystrix-dashboard');
 const toobusy = require('express-hystrix-toobusy');
 
-const appDashboard = require('appmetrics-dash');
-
 // if circuit breaker is open - response 503 http status code
 const hystrixConfig = {
     fallback: (err, req, res) => {
@@ -66,13 +64,7 @@ module.exports = (app) => {
     }));
 
     // use before routes for aggregating metrics info
-    app.use(toobusy(hystrixConfig))
-
-    // monitoring state of application for example event loop latency, heap size etc.
-    appDashboard.monitor({
-        url: '/api/appmetrics',
-        port: 3001
-    });
+    app.use(toobusy(hystrixConfig));
 };
 
 

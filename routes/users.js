@@ -3,7 +3,7 @@ const router = express.Router();
 
 const UsersController = require('../controllers/users');
 const {validateParams, validateQuery, validateBody, schema} = require('../helpers/routeHelper');
-const {authenticate} = require('../helpers/authHelper');
+const {authenticate, authWithRole} = require('../helpers/authHelper');
 
 //documented in Swagger
 router.route('/')
@@ -26,7 +26,7 @@ router.route('/manager')
 
 //documented in Swagger
 router.route('/list')
-    .get([authenticate],
+    .get([authWithRole(['viewers', 'manager'])],
        //   validateQuery(schema.paginateSchema, ['page', 'limit', 'sort'])],
           UsersController.getUsersByPagination);
 

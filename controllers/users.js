@@ -84,6 +84,8 @@ module.exports = {
             };
             const role = new Role(roleObj);
 
+            viewer.roles.push(role);
+
             await viewer.save();
             await role.save();
 

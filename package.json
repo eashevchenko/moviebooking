@@ -4,7 +4,8 @@
   "description": "Movie booking service",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js",
+    "start": "node app.js",
+    "dev": "nodemon app.js",
     "test": "test"
   },
   "keywords": [
@@ -13,15 +14,16 @@
   "author": "Eugene Shevchenko",
   "license": "MIT",
   "dependencies": {
-    "appmetrics-dash": "^3.3.2",
-    "bcrypt": "^1.0.2",
+    "bcrypt": "^1.0.3",
     "body-parser": "^1.17.1",
     "express": "^4.15.0",
     "express-hystrix": "^1.0.2",
     "express-hystrix-toobusy": "^1.0.0",
+    "express-jwt-permissions": "^1.0.0",
     "hystrix-dashboard": "^1.0.3",
     "joi": "^10.6.0",
     "jsonwebtoken": "^7.4.1",
+    "lodash": "^4.17.4",
     "moment": "^2.18.1",
     "mongoose": "^4.10.8",
     "morgan": "^1.8.2",
