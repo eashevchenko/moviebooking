@@ -1,0 +1,31 @@
+version: "2"
+services:
+  moviebooking:
+    build: .
+    command: "pm2-docker process.json --web"
+    ports:
+      - "8080:3000"
+      - "12345:12345"
+    links:
+      - db
+    depends_on:
+      - db
+    environment:
+      - NODE_ENV=development
+      - SERVER_PORT=3000
+      - MONGODB_URL=mongodb://db:27017/mbooking
+      - JWT_SECRET=movie_secret
+      - INVITE_CODE_CHARSET=0123456789
+      - INVITE_CODE=16
+      - INVITE_CODE_LENGTH=16
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+  db:
+    image: mongo:3.6.1-jessie
+    ports:
+      - "4015:27017"
+    environment:
+      - MONGO_DATA_DIR=/data/db
+    volumes:
+      - /data/db/data/db
