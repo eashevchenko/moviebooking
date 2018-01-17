@@ -1,8 +1,6 @@
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 
-const {environment} = require('../config');
-
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('../swagger/swagger.json');
 
@@ -41,7 +39,7 @@ const hystrixConfig = {
 };
 
 module.exports = (app) => {
-    if (environment === 'development') {
+    if (process.env.NODE_ENV === 'development') {
         app.use(logger('dev'));
     }
 

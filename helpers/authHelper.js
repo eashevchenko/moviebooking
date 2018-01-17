@@ -2,20 +2,18 @@ const jwt = require('jsonwebtoken');
 const _ = require('lodash');
 const User = require('../model/user');
 
-const {secret} = require('../config');
-
 module.exports = {
 
     generateToken: (userId) => {
-        return jwt.sign({ _id: userId }, secret.secretKey, {
-            expiresIn: secret.sessionExpiration,
+        return jwt.sign({ _id: userId }, process.env.JWT_SECRET, {
+            expiresIn: 60 * 60 * 24,
         });
     },
 
     authenticate: (req, res, next) => {
         const {authorization} = req.headers;
 
-        jwt.verify(authorization, secret.secretKey, async (err, decoded) => {
+        jwt.verify(authorization, process.env.JWT_SECRET, async (err, decoded) => {
             if (err) {
                 return res.sendStatus(401);
             }
@@ -37,7 +35,7 @@ module.exports = {
         return function (req, res, next) {
             const {authorization} = req.headers;
 
-            jwt.verify(authorization, secret.secretKey, async (err, decoded) => {
+            jwt.verify(authorization, process.env.JWT_SECRET, async (err, decoded) => {
                 if (err) {
                     return res.sendStatus(401);
                 }

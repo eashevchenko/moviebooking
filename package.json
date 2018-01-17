@@ -2,6 +2,10 @@
   "name": "moviebooking",
   "version": "0.1.0",
   "description": "Movie booking service",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eashevchenko/moviebooking.git"
+  },
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
@@ -16,10 +20,10 @@
   "dependencies": {
     "bcrypt": "^1.0.3",
     "body-parser": "^1.17.1",
+    "dotenv": "^4.0.0",
     "express": "^4.15.0",
     "express-hystrix": "^1.0.2",
     "express-hystrix-toobusy": "^1.0.0",
-    "express-jwt-permissions": "^1.0.0",
     "hystrix-dashboard": "^1.0.3",
     "joi": "^10.6.0",
     "jsonwebtoken": "^7.4.1",

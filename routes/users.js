@@ -4,6 +4,7 @@ const router = express.Router();
 const UsersController = require('../controllers/users');
 const {validateParams, validateQuery, validateBody, schema} = require('../helpers/routeHelper');
 const {authenticate, authWithRole} = require('../helpers/authHelper');
+const userRoles = require('../enums/userRoles');
 
 //documented in Swagger
 router.route('/')
@@ -14,36 +15,40 @@ router.route('/')
 
 //documented in Swagger
 router.route('/search')
-    .get(UsersController.searchUser);
+      .get(UsersController.searchUser);
 
 //documented in Swagger
 router.route('/invite')
-      .get([authenticate,validateQuery(schema.inviteSchema, ['email'])], UsersController.inviteManager);
+      .get([authWithRole([userRoles.MANAGER]),
+            validateQuery(schema.inviteSchema, ['email'])],
+            UsersController.inviteManager);
 
 //documented in Swagger
 router.route('/manager')
-      .post([validateQuery(schema.managerSchema, ['code'])],UsersController.createManager);
+      .post([validateQuery(schema.managerSchema, ['code'])],
+             UsersController.createManager);
 
 //documented in Swagger
 router.route('/list')
-    .get([authWithRole(['viewers', 'manager'])],
-       //   validateQuery(schema.paginateSchema, ['page', 'limit', 'sort'])],
+    .get([authWithRole([userRoles.MANAGER]),
+          validateQuery(schema.paginateSchema, ['page', 'limit', 'sort'])],
           UsersController.getUsersByPagination);
 
 //documented in Swagger
 router.route('/:id')
-    .get([authenticate,
+    .get([authWithRole([userRoles.MANAGER]),
           validateParams(schema.idSchema, ['id'])],
           UsersController.getUser)
-    .put([authenticate,
+    .put([authWithRole([userRoles.MANAGER]),
           validateParams(schema.idSchema, ['id'])],
           UsersController.updateUser)
-    .delete([authenticate,
+    .delete([authWithRole([userRoles.MANAGER]),
              validateParams(schema.idSchema, ['id'])],
              UsersController.removeUser);
 
 //documented in Swagger
 router.route('/notify')
-    .post([authenticate], UsersController.notifyUser);
+    .post([authWithRole([userRoles.MANAGER])],
+           UsersController.notifyUser);
 
 module.exports = router;

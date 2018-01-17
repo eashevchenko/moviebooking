@@ -5,7 +5,7 @@ const {getDefaultValues} = require('../helpers/appHelper');
 const {initMessageObj, messages} = require('../helpers/messageHelper');
 const {generateInviteCode} = require('../helpers/inviteHelper');
 const {sendSMS, createCall} = require('../helpers/twilioHelper');
-const {userRoles} = require('../config');
+const userRoles = require('../enums/userRoles');
 
 
 module.exports = {
@@ -15,7 +15,6 @@ module.exports = {
             const users = await User
                 .find({})
                 .select({password: 0, tickets: 0});
-
             res.status(200).json(users);
         } catch (err) {
             next(err);
@@ -80,7 +79,7 @@ module.exports = {
 
             const roleObj = {
                 user: viewer,
-                roleType: userRoles.viewer
+                roleType: userRoles.VIEWER
             };
             const role = new Role(roleObj);
 
@@ -138,7 +137,7 @@ module.exports = {
 
             const roleObj = {
                 user: manager,
-                roleType: userRoles.manager
+                roleType: userRoles.MANAGER
             };
 
             const role = new Role(roleObj);

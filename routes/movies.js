@@ -1,14 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const {validateParams, validateQuery, validateBody, schema} = require('../helpers/routeHelper');
-const {authenticate} = require('../helpers/authHelper');
+const {authenticate, authWithRole} = require('../helpers/authHelper');
+const userRoles = require('../enums/userRoles');
 
 const MoviesController = require('../controllers/movies');
 
 //documented in Swagger
 router.route('/')
     .get(MoviesController.getMovies)
-    .post([authenticate,
+    .post([authWithRole(userRoles.MANAGER),
            validateBody(schema.movieSchema)],
            MoviesController.createMovie);
 
@@ -21,7 +22,7 @@ router.route('/list')
 router.route('/:id')
     .get([validateParams(schema.idSchema, ['id'])],
           MoviesController.getMovieById)
-    .put([authenticate,
+    .put([authWithRole([userRoles.MANAGER]),
           validateParams(schema.idSchema, 'id')],
           MoviesController.updateMovie)
     .delete([authenticate,

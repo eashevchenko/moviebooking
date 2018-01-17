@@ -3,12 +3,13 @@ const router = express.Router();
 
 const CinemasController = require('../controllers/cinemas');
 const {validateParams, validateQuery, validateBody, schema} = require('../helpers/routeHelper');
-const {authenticate}  = require('../helpers/authHelper');
+const {authenticate, authWithRole}  = require('../helpers/authHelper');
+const userRoles = require('../enums/userRoles');
 
 //documented in Swagger
 router.route('/')
       .get(CinemasController.getCinemas)
-      .post([authenticate,
+      .post([authWithRole([userRoles.MANAGER]),
              validateBody(schema.cinemaSchema)],
              CinemasController.createCinema);
 
@@ -21,7 +22,7 @@ router.route('/list')
 router.route('/:id')
       .get([validateParams(schema.idSchema, 'id')],
             CinemasController.getCinemaById)
-      .delete([authenticate,
+      .delete([authWithRole([userRoles.MANAGER]),
                validateParams(schema.idSchema, ['id'])],
                CinemasController.removeCinema);
 
@@ -37,8 +38,8 @@ router.route('/:id/movies/:from')
             CinemasController.getCinemaMoviesBetweenDates);
 
 router.route('/:id/movies')
-    .get([validateParams(schema.idSchema, ['id']),
-          validateQuery(schema.queryDatesSchema, ['from', 'to'])],
-          CinemasController.getCinemaMoviesBetweenDates);
+      .get([validateParams(schema.idSchema, ['id']),
+            validateQuery(schema.queryDatesSchema, ['from', 'to'])],
+            CinemasController.getCinemaMoviesBetweenDates);
 
 module.exports = router;

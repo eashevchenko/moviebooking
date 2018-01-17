@@ -1,14 +1,12 @@
 const generator = require('voucher-code-generator');
 
-const {inviteCode} = require('../config');
-
 module.exports = {
 
     generateInviteCode: () => {
         return generator.generate({
-            length: inviteCode.length,
-            code: inviteCode.code,
-            charset: inviteCode.charset
+            length: process.env.INVITE_CODE_LENGTH,
+            code: process.env.INVITE_CODE,
+            charset: process.env.INVITE_CODE_CHARSET
         })[0];
     }
 };
