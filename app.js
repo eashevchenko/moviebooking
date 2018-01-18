@@ -10,5 +10,5 @@ require('./middlewares')(app);
 require('./routes')(app);
 
 app.listen(PORT,() => {
-    console.log('server started on port: ', PORT);
+    console.log('server started.. Port: ', PORT);
 });
