@@ -6,7 +6,7 @@ const {decodePassword} = require('../helpers/passwordHelper');
 const userSchema = new Schema({
     firstName: String,
     lastName: String,
-    email: String,
+    email: {type: String, unique: true },
     password: String,
     phoneNumber: String,
     roles: [{

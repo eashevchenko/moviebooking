@@ -6,6 +6,7 @@ const {initMessageObj, messages} = require('../helpers/messageHelper');
 const {generateInviteCode} = require('../helpers/inviteHelper');
 const {sendSMS, createCall} = require('../helpers/twilioHelper');
 const userRoles = require('../enums/userRoles');
+const {checkDBError} = require('../config/db/errorHelper');
 
 
 module.exports = {
@@ -90,7 +91,7 @@ module.exports = {
 
             res.status(201).json(initMessageObj(messages.userSaved));
         } catch (err) {
-            next(err);
+            checkDBError(err, res, next);
         }
     },
 
@@ -160,7 +161,7 @@ module.exports = {
 
             res.status(201).json(initMessageObj(messages.userSaved));
         } catch (err) {
-            next(err);
+            checkDBError(err, res, next);
         }
     },
 
