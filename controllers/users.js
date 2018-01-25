@@ -8,6 +8,7 @@ const {sendSMS, createCall} = require('../helpers/twilioHelper');
 const userRoles = require('../enums/userRoles');
 const {checkDBError} = require('../config/db/errorHelper');
 
+const _ = require('lodash');
 
 module.exports = {
 
@@ -86,10 +87,19 @@ module.exports = {
 
             viewer.roles.push(role);
 
-            await viewer.save();
-            await role.save();
 
-            res.status(201).json(initMessageObj(messages.userSaved));
+            // full response user was saved in second element of array
+            const result = [await viewer.save(), await role.save()];
+            const {user, roleType} = result[1];
+
+            const responseUser = _.pick(user, ['firstName', 'lastName', 'email', 'phoneNumber']);
+
+            const responseObj = {
+                user: responseUser,
+                roleType
+            };
+
+            res.status(201).json(responseObj);
         } catch (err) {
             checkDBError(err, res, next);
         }
