@@ -1037,6 +1037,29 @@
         }
       }
     },
+    "/viewers/info": {
+      "get": {
+        "tags": [
+          "manager"
+        ],
+        "summary": "Get all viewers info",
+        "description": "",
+        "operationId": "getUsersInfo",
+        "consumes": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
     "/users/search": {
       "get": {
         "tags": [

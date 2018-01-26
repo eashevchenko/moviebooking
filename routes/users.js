@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const UsersController = require('../controllers/users');
+const ViewerController = require('../controllers/viewerController');
 const {validateParams, validateQuery, validateBody, schema} = require('../helpers/routeHelper');
 const {authenticate, authWithRole} = require('../helpers/authHelper');
 const userRoles = require('../enums/userRoles');
@@ -12,6 +13,11 @@ router.route('/')
           UsersController.getUsers)
     .post([validateBody(schema.userSchema)],
            UsersController.createViewer);
+
+//documented in Swagger
+router.route('/viewers/info')
+    .get([authenticate],
+        ViewerController.getViewersInfo);
 
 //documented in Swagger
 router.route('/search')

@@ -4,8 +4,6 @@ const Schema = mongoose.Schema;
 const {decodePassword} = require('../helpers/passwordHelper');
 
 const userSchema = new Schema({
-    firstName: String,
-    lastName: String,
     email: {type: String, unique: true },
     password: String,
     phoneNumber: String,
@@ -16,12 +14,7 @@ const userSchema = new Schema({
     tickets: [{
         type: Schema.Types.ObjectId,
         ref: 'ticket'
-    }],
-    creditCard: {
-        number: Number,
-        cvc: Number,
-        expYear: Number
-    }
+    }]
 });
 
 userSchema.statics.byEmail = function (email) {

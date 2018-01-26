@@ -1,4 +1,5 @@
 const User = require('../model/user');
+const ViewerInfo = require('../model/viewer_info');
 const Role = require('../model/user_roles');
 const Invite = require('../model/invite');
 const {getDefaultValues} = require('../helpers/appHelper');
@@ -83,13 +84,19 @@ module.exports = {
                 user: viewer,
                 roleType: userRoles.VIEWER
             };
+
             const role = new Role(roleObj);
 
             viewer.roles.push(role);
 
+            const viewerInfo = new ViewerInfo({
+                email: req.body.email
+            });
 
             // full response user was saved in second element of array
-            const result = [await viewer.save(), await role.save()];
+            const result = [await viewer.save(),
+                await role.save(),
+                await viewerInfo.save()];
             const {user, roleType} = result[1];
 
             const responseUser = _.pick(user, ['firstName', 'lastName', 'email', 'phoneNumber']);
