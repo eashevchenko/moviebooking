@@ -7,6 +7,10 @@ const swaggerDocument = require('../swagger/swagger.json');
 const hystrixDashboard = require('hystrix-dashboard');
 const toobusy = require('express-hystrix-toobusy');
 
+
+const multer  = require('multer');
+const storage = multer.memoryStorage();
+
 // if circuit breaker is open - response 503 http status code
 const hystrixConfig = {
     fallback: (err, req, res) => {
@@ -47,6 +51,8 @@ module.exports = (app) => {
     app.use(bodyParser.urlencoded({
         extended: true
     }));
+
+    app.use(multer({ storage: storage }).any());
 
     app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 

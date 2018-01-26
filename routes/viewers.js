@@ -2,13 +2,13 @@ const express = require('express');
 const router = express.Router();
 
 const ViewerController = require('../controllers/viewerController');
-const {validateParams, validateQuery, validateBody, schema} = require('../helpers/routeHelper');
-const {authenticate, authWithRole} = require('../helpers/authHelper');
-const userRoles = require('../enums/userRoles');
+const {authenticate} = require('../helpers/authHelper');
 
 //documented in Swagger
 router.route('/info')
-    .get([authenticate],
-        ViewerController.getViewersInfo);
+    .get(ViewerController.getViewersInfo);
+
+router.route('/photo')
+    .put(ViewerController.uploadProfileImage);
 
 module.exports = router;
