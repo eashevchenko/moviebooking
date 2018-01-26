@@ -20,6 +20,7 @@
   "dependencies": {
     "bcrypt": "^1.0.3",
     "body-parser": "^1.17.1",
+    "cloudinary": "^1.9.1",
     "dotenv": "^4.0.0",
     "express": "^4.15.0",
     "express-hystrix": "^1.0.2",
