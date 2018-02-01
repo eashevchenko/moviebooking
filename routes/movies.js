@@ -6,6 +6,9 @@ const userRoles = require('../enums/userRoles');
 
 const MoviesController = require('../controllers/movies');
 
+const {asyncCatchMiddleware}  = require('../middlewares/asyncMiddleware');
+router.use(asyncCatchMiddleware(MoviesController));
+
 //documented in Swagger
 router.route('/')
     .get(MoviesController.getMovies)

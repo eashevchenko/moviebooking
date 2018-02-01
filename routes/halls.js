@@ -6,6 +6,9 @@ const {validateParams, validateQuery, validateBody, schema} = require('../helper
 const {authWithRole} = require('../helpers/authHelper');
 const userRoles = require('../enums/userRoles');
 
+const {asyncCatchMiddleware}  = require('../middlewares/asyncMiddleware');
+router.use(asyncCatchMiddleware(HallsController));
+
 //documented in Swagger
 router.route('/')
       .get(HallsController.getHalls);

@@ -6,6 +6,9 @@ const {validateParams, validateQuery, schema} = require('../helpers/routeHelper'
 const {authenticate, authWithRole} = require('../helpers/authHelper');
 const userRoles = require('../enums/userRoles');
 
+const {asyncCatchMiddleware}  = require('../middlewares/asyncMiddleware');
+router.use(asyncCatchMiddleware(ShowTimeController));
+
 // documented in Swagger
 router.route('/')
       .get(ShowTimeController.getShowTimes);

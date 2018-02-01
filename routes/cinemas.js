@@ -6,6 +6,10 @@ const {validateParams, validateQuery, validateBody, schema} = require('../helper
 const {authenticate, authWithRole}  = require('../helpers/authHelper');
 const userRoles = require('../enums/userRoles');
 
+const {asyncCatchMiddleware}  = require('../middlewares/asyncMiddleware');
+
+router.use(asyncCatchMiddleware(CinemasController));
+
 //documented in Swagger
 router.route('/')
       .get(CinemasController.getCinemas)
