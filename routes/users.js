@@ -3,8 +3,8 @@ const router = express.Router();
 
 const UsersController = require('../controllers/users');
 const ViewerController = require('../controllers/viewerController');
-const {validateParams, validateQuery, validateBody, schema} = require('../helpers/routeHelper');
-const {authenticate, authWithRole} = require('../helpers/authHelper');
+const {validateParams, validateQuery, validateBody, schema} = require('../middlewares/routeMiddleware');
+const {authenticate, authWithRole} = require('../middlewares/authMiddleware');
 const userRoles = require('../enums/userRoles');
 
 const {asyncCatchMiddleware}  = require('../middlewares/asyncMiddleware');

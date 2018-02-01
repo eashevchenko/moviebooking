@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 
 const HallsController = require('../controllers/hall');
-const {validateParams, validateQuery, validateBody, schema} = require('../helpers/routeHelper');
-const {authWithRole} = require('../helpers/authHelper');
+const {validateParams, validateQuery, validateBody, schema} = require('../middlewares/routeMiddleware');
+const {authWithRole} = require('../middlewares/authMiddleware');
 const userRoles = require('../enums/userRoles');
 
 const {asyncCatchMiddleware}  = require('../middlewares/asyncMiddleware');

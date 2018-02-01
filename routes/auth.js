@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const AuthController = require('../controllers/auth');
-const {validateBody, schema} = require('../helpers/routeHelper');
+const {validateBody, schema} = require('../middlewares/routeMiddleware');
 const {asyncCatchMiddleware}  = require('../middlewares/asyncMiddleware');
 
 router.use(asyncCatchMiddleware(AuthController));

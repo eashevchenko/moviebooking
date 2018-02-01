@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const ViewerController = require('../controllers/viewerController');
-const {authenticate} = require('../helpers/authHelper');
+const {authenticate} = require('../middlewares/authMiddleware');
 
 const {asyncCatchMiddleware}  = require('../middlewares/asyncMiddleware');
 router.use(asyncCatchMiddleware(ViewerController));
